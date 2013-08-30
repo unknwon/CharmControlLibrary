@@ -1,0 +1,334 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{68932B3D-F876-4F01-9866-48CA6EF48B35}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>CharmControlLibrary</RootNamespace>
+    <AssemblyName>CharmControlLibrary</AssemblyName>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>..\Libraries\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Libraries\CharmControlLibrary.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>..\Libraries\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>..\Libraries\CharmControlLibrary.XML</DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup>
+    <SignAssembly>false</SignAssembly>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="CharmCommonMethod, Version=1.8.4796.39999, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\Libraries\CharmCommonMethod.dll</HintPath>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Windows.Forms" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="CharmButton.cs" />
+    <Compile Include="CharmCatalogueList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CharmCheckBox.cs" />
+    <Compile Include="CharmControl.cs" />
+    <Compile Include="CharmLinkLabel.cs" />
+    <Compile Include="CharmMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharmMenu.Designer.cs">
+      <DependentUpon>CharmMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharmMessageBox.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CharmMessageBox.Designer.cs">
+      <DependentUpon>CharmMessageBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CharmSkinPanel.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CharmStudyPlanList.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CharmSysButton.cs" />
+    <Compile Include="CharmTextBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="CharmMenu.resx">
+      <DependentUpon>CharmMenu.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CharmMessageBox.resx">
+      <DependentUpon>CharmMessageBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_min_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_min_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_skin_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_skin_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_skin_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_close_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_close_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_close_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_feedback_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_feedback_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_feedback_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_menu_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_menu_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_menu_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_min_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_12425_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_12425_Unenabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_06922_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_06922_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_06922_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_06922_unenabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_08223_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_08223_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_08223_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_08223_unenabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_12425_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\btn_12425_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messagebox_bluesky.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messageboxicon_warning.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messageboxicon_error.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messageboxicon_info.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messageboxicon_ok.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMessageBox\messageboxicon_question.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMenu\menu_bkg_qq.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMenu\menu_bkg_qqsoftclass.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMenu\menu_bkg_qqsoftmgr.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMenu\menu_spliter.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmMenu\mun_select_bkg.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCheckBox\checkbox_hightlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCheckBox\checkbox_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCheckBox\checkbox_tick_highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCheckBox\checkbox_tick_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_ksv4_close_normal.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_ksv4_close_over.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSysButton\sysbtn_ksv4_close_down.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmTextBox\textbox_bkg__normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmTextBox\textbox_bkg_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmTextBox\textbox_bkg_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\skinpanel_bkg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\shading_bkg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tab_pushed_bkg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabshading_pushed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabshading_highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabshading_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\pic_check.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\pic_shading_highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\pic_add_highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\pic_add_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabcolor_pushed.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabcolor_highlight.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmSkinPanel\tabcolor_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\green_10236_unenabled.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\green_10236_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\green_10236_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmButton\green_10236_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmStudyPlanList\timeprogressbg.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmStudyPlanList\btn_big_down.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmStudyPlanList\btn_big_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmStudyPlanList\btn_big_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmStudyPlanList\time_progress_fg_lightGreen.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\catalog_class_collapse.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\catalog_class_expand.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\Catalog_First.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\Catalog_hover.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\Catalog_normal.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\CharmCatalogueList\Catalog_pushed.png" />
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
