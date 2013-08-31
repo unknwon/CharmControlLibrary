@@ -18,7 +18,6 @@ using System.Drawing;
 using System.Windows.Forms;
 using System.Collections.Generic;
 
-using CharmCommonMethod;
 #endregion
 
 namespace CharmControlLibrary
@@ -27,7 +26,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 控件状态：常态，悬浮态，按下态，失活态
     /// </summary>
-    public enum ControlStatus : int
+    public enum ControlStatus
     {
         /// <summary>
         /// 常态
@@ -50,7 +49,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 控件类型
     /// </summary>
-    public enum ControlType : int
+    public enum ControlType
     {
         /// <summary>
         /// 系统按钮控件
@@ -163,8 +162,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual SysButtonType SysButtonType
         {
-            get { return this.mSysButtonType; }
-            set { this.mSysButtonType = value; }
+            get { return mSysButtonType; }
+            set { mSysButtonType = value; }
         }
 
         /// <summary>
@@ -172,8 +171,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual ButtonType ButtonType
         {
-            get { return this.mButtonType; }
-            set { this.mButtonType = value; }
+            get { return mButtonType; }
+            set { mButtonType = value; }
         }
 
         /// <summary>
@@ -190,13 +189,13 @@ namespace CharmControlLibrary
         /// </summary>
         public Point Location
         {
-            get { return this.mLocation; }
+            get { return mLocation; }
             set
             {
-                this.mLocation = value;
-                this.mLeft = mLocation.X;
-                this.mTop = mLocation.Y;
-                this.mClientRectangle.Location = mLocation;
+                mLocation = value;
+                mLeft = mLocation.X;
+                mTop = mLocation.Y;
+                mClientRectangle.Location = mLocation;
             }
         }
 
@@ -205,12 +204,12 @@ namespace CharmControlLibrary
         /// </summary>
         public int Left
         {
-            get { return this.mLeft; }
+            get { return mLeft; }
             set
             {
-                this.mLeft = value;
-                this.mLocation.X = mLeft;
-                this.mClientRectangle.X = mLeft;
+                mLeft = value;
+                mLocation.X = mLeft;
+                mClientRectangle.X = mLeft;
             }
         }
 
@@ -219,13 +218,13 @@ namespace CharmControlLibrary
         /// </summary>
         public int Top
         {
-            get { return this.mTop; }
+            get { return mTop; }
             set
             {
-                this.mTop = value;
-                this.mLocation.Y = mTop;
-                this.mClientRectangle.Y = mTop;
-                this.mBottom = mClientRectangle.Bottom;
+                mTop = value;
+                mLocation.Y = mTop;
+                mClientRectangle.Y = mTop;
+                mBottom = mClientRectangle.Bottom;
             }
         }
 
@@ -234,15 +233,15 @@ namespace CharmControlLibrary
         /// </summary>
         public Size Size
         {
-            get { return this.mSize; }
+            get { return mSize; }
             set
             {
-                this.mSize = value;
-                this.mClientRectangle.Size = mSize;
-                this.mClientSize = mSize;
-                this.mHeight = mSize.Height;
-                this.mWidth = mSize.Width;
-                this.mBottom = mClientRectangle.Bottom;
+                mSize = value;
+                mClientRectangle.Size = mSize;
+                mClientSize = mSize;
+                mHeight = mSize.Height;
+                mWidth = mSize.Width;
+                mBottom = mClientRectangle.Bottom;
             }
         }
 
@@ -251,7 +250,7 @@ namespace CharmControlLibrary
         /// </summary>
         public int Bottom
         {
-            get { return this.mBottom; }
+            get { return mBottom; }
         }
 
         /// <summary>
@@ -259,7 +258,7 @@ namespace CharmControlLibrary
         /// </summary>
         public Rectangle ClientRectangle
         {
-            get { return this.mClientRectangle; }
+            get { return mClientRectangle; }
         }
 
         /// <summary>
@@ -267,8 +266,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual string Text
         {
-            get { return this.mText; }
-            set { this.mText = value; }
+            get { return mText; }
+            set { mText = value; }
         }
 
         /// <summary>
@@ -276,8 +275,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Point TextPosition
         {
-            get { return this.mTextPosition; }
-            set { this.mTextPosition = value; }
+            get { return mTextPosition; }
+            set { mTextPosition = value; }
         }
 
         /// <summary>
@@ -285,8 +284,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual Font Font
         {
-            get { return this.mFont; }
-            set { this.mFont = value; }
+            get { return mFont; }
+            set { mFont = value; }
         }
 
         /// <summary>
@@ -294,8 +293,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual Color ForeColor
         {
-            get { return this.mForeColor; }
-            set { this.mForeColor = value; }
+            get { return mForeColor; }
+            set { mForeColor = value; }
         }
 
         /// <summary>
@@ -303,8 +302,8 @@ namespace CharmControlLibrary
         /// </summary>
         public bool Visible
         {
-            get { return this.mIsVisible; }
-            set { this.mIsVisible = value; }
+            get { return mIsVisible; }
+            set { mIsVisible = value; }
         }
 
         /// <summary>
@@ -312,19 +311,19 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual bool Enabled
         {
-            get { return this.mIsEnabled; }
+            get { return mIsEnabled; }
             set
             {
-                this.mIsEnabled = value;
+                mIsEnabled = value;
                 // 根据控件激活性设置控件状态
-                if (this.mIsEnabled)
+                if (mIsEnabled)
                 {
-                    this.mForeColor = this.mCacheForeColor;
+                    mForeColor = mCacheForeColor;
                 }
                 else
                 {
-                    this.mCacheForeColor = this.mForeColor;
-                    this.mForeColor = Color.DarkGray;
+                    mCacheForeColor = mForeColor;
+                    mForeColor = Color.DarkGray;
                 }
             }
         }
@@ -334,12 +333,12 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual bool Checked
         {
-            get { return this.mIsChecked; }
+            get { return mIsChecked; }
             set
             {
-                this.mIsChecked = value;
+                mIsChecked = value;
                 // 修改状态是为了让主窗体能重绘该控件
-                this.ControlStatus = ControlStatus.Normal;
+                ControlStatus = ControlStatus.Normal;
             }
         }
 
@@ -348,8 +347,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual bool AllowDrop
         {
-            get { return this.mIsAllowDrop; }
-            set { this.mIsAllowDrop = value; }
+            get { return mIsAllowDrop; }
+            set { mIsAllowDrop = value; }
         }
 
         /// <summary>
@@ -357,8 +356,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual Image BackgroundImage
         {
-            get { return this.mBackgroundImage; }
-            set { this.mBackgroundImage = value; }
+            get { return mBackgroundImage; }
+            set { mBackgroundImage = value; }
         }
 
         /// <summary>
@@ -366,8 +365,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Size ClientSize
         {
-            get { return this.mClientSize; }
-            set { this.mClientSize = value; }
+            get { return mClientSize; }
+            set { mClientSize = value; }
         }
 
         /// <summary>
@@ -375,7 +374,7 @@ namespace CharmControlLibrary
         /// </summary>
         public string CompanyName
         {
-            get { return this.mCompanyName; }
+            get { return mCompanyName; }
         }
 
         /// <summary>
@@ -383,8 +382,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual CharmMenu ContextMenu
         {
-            get { return this.mContextMenu; }
-            set { this.mContextMenu = value; }
+            get { return mContextMenu; }
+            set { mContextMenu = value; }
         }
 
         /// <summary>
@@ -392,7 +391,7 @@ namespace CharmControlLibrary
         /// </summary>
         public List<CharmControl> Controls
         {
-            get { return this.mControls; }
+            get { return mControls; }
         }
 
         /// <summary>
@@ -400,8 +399,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual ControlStatus ControlStatus
         {
-            get { return this.mControlStatus; }
-            set { this.mControlStatus = value; }
+            get { return mControlStatus; }
+            set { mControlStatus = value; }
         }
 
         /// <summary>
@@ -409,8 +408,8 @@ namespace CharmControlLibrary
         /// </summary>
         public ControlType ControlType
         {
-            get { return this.mControlType; }
-            set { this.mControlType = value; }
+            get { return mControlType; }
+            set { mControlType = value; }
         }
 
         /// <summary>
@@ -418,8 +417,8 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual Cursor Cursor
         {
-            get { return this.mCursor; }
-            set { this.mCursor = value; }
+            get { return mCursor; }
+            set { mCursor = value; }
         }
 
         /// <summary>
@@ -427,7 +426,7 @@ namespace CharmControlLibrary
         /// </summary>
         public virtual bool Focused
         {
-            get { return this.mIsFocused; }
+            get { return mIsFocused; }
         }
 
         /// <summary>
@@ -435,7 +434,7 @@ namespace CharmControlLibrary
         /// </summary>
         public IntPtr Handle
         {
-            get { return this.mHandle; }
+            get { return mHandle; }
         }
 
         /// <summary>
@@ -443,14 +442,14 @@ namespace CharmControlLibrary
         /// </summary>
         public int Height
         {
-            get { return this.mHeight; }
+            get { return mHeight; }
             set
             {
-                this.mHeight = value;
-                this.mClientRectangle.Height = mHeight;
-                this.mClientSize.Height = mHeight;
-                this.mSize.Height = mHeight;
-                this.mBottom = mClientRectangle.Bottom;
+                mHeight = value;
+                mClientRectangle.Height = mHeight;
+                mClientSize.Height = mHeight;
+                mSize.Height = mHeight;
+                mBottom = mClientRectangle.Bottom;
             }
         }
 
@@ -459,8 +458,8 @@ namespace CharmControlLibrary
         /// </summary>
         public string Name
         {
-            get { return this.mName; }
-            set { this.mName = value; }
+            get { return mName; }
+            set { mName = value; }
         }
 
         /// <summary>
@@ -468,8 +467,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Control Parent
         {
-            get { return this.mParent; }
-            set { this.mParent = value; }
+            get { return mParent; }
+            set { mParent = value; }
         }
 
         /// <summary>
@@ -477,7 +476,7 @@ namespace CharmControlLibrary
         /// </summary>
         public string ProductName
         {
-            get { return this.mProductName; }
+            get { return mProductName; }
         }
 
         /// <summary>
@@ -485,7 +484,7 @@ namespace CharmControlLibrary
         /// </summary>
         public string ProductVersion
         {
-            get { return this.mProductVersion; }
+            get { return mProductVersion; }
         }
 
         /// <summary>
@@ -493,8 +492,8 @@ namespace CharmControlLibrary
         /// </summary>
         public int TabIndex
         {
-            get { return this.mTabIndex; }
-            set { this.mTabIndex = value; }
+            get { return mTabIndex; }
+            set { mTabIndex = value; }
         }
 
         /// <summary>
@@ -502,8 +501,8 @@ namespace CharmControlLibrary
         /// </summary>
         public bool TabStop
         {
-            get { return this.mIsTabStop; }
-            set { this.mIsTabStop = value; }
+            get { return mIsTabStop; }
+            set { mIsTabStop = value; }
         }
 
         /// <summary>
@@ -511,13 +510,13 @@ namespace CharmControlLibrary
         /// </summary>
         public int Width
         {
-            get { return this.mWidth; }
-            set 
+            get { return mWidth; }
+            set
             {
-                this.mWidth = value;
-                this.mClientRectangle.Width = mWidth;
-                this.mClientSize.Width = mWidth;
-                this.mSize.Width = mWidth;
+                mWidth = value;
+                mClientRectangle.Width = mWidth;
+                mClientSize.Width = mWidth;
+                mSize.Width = mWidth;
             }
         }
 
@@ -526,8 +525,8 @@ namespace CharmControlLibrary
         /// </summary>
         public string ToolTipText
         {
-            get { return this.mToolTipText; }
-            set { this.mToolTipText = value; }
+            get { return mToolTipText; }
+            set { mToolTipText = value; }
         }
         #endregion
 
@@ -543,8 +542,8 @@ namespace CharmControlLibrary
         protected virtual void OnBackgroundImageChanged(
             EventArgs e)
         {
-            if (this.BackgroundImageChanged != null)
-                this.BackgroundImageChanged(this, e);
+            if (BackgroundImageChanged != null)
+                BackgroundImageChanged(this, e);
         }
 
         /// <summary>
@@ -558,8 +557,8 @@ namespace CharmControlLibrary
         protected virtual void OnClick(
             EventArgs e)
         {
-            if (this.Click != null)
-                this.Click(this, e);
+            if (Click != null)
+                Click(this, e);
         }
 
         /// <summary>
@@ -573,8 +572,8 @@ namespace CharmControlLibrary
         protected virtual void OnClientSizeChanged(
             EventArgs e)
         {
-            if (this.ClientSizeChanged != null)
-                this.ClientSizeChanged(this, e);
+            if (ClientSizeChanged != null)
+                ClientSizeChanged(this, e);
         }
 
         /// <summary>
@@ -588,8 +587,8 @@ namespace CharmControlLibrary
         protected virtual void OnContextMenuChanged(
             EventArgs e)
         {
-            if (this.ContextMenuChanged != null)
-                this.ContextMenuChanged(this, e);
+            if (ContextMenuChanged != null)
+                ContextMenuChanged(this, e);
         }
 
         /// <summary>
@@ -603,8 +602,8 @@ namespace CharmControlLibrary
         protected virtual void OnControlAdded(
             ControlEventArgs e)
         {
-            if (this.ControlAdded != null)
-                this.ControlAdded(this, e);
+            if (ControlAdded != null)
+                ControlAdded(this, e);
         }
 
         /// <summary>
@@ -618,8 +617,8 @@ namespace CharmControlLibrary
         protected virtual void OnControlRemoved(
             ControlEventArgs e)
         {
-            if (this.ControlRemoved != null)
-                this.ControlRemoved(this, e);
+            if (ControlRemoved != null)
+                ControlRemoved(this, e);
         }
 
         /// <summary>
@@ -633,8 +632,8 @@ namespace CharmControlLibrary
         protected virtual void OnCursorChanged(
             EventArgs e)
         {
-            if (this.CursorChanged != null)
-                this.CursorChanged(this, e);
+            if (CursorChanged != null)
+                CursorChanged(this, e);
         }
 
         /// <summary>
@@ -647,11 +646,11 @@ namespace CharmControlLibrary
         public void Dispose()
         {
             // * 释放系统资源 *
-            this.mBackgroundImage = null;
-            this.mFont = null;
+            mBackgroundImage = null;
+            mFont = null;
             // 触发事件
-            if (this.Disposed != null)
-                this.Disposed(this, new EventArgs());
+            if (Disposed != null)
+                Disposed(this, new EventArgs());
         }
 
         /// <summary>
@@ -665,8 +664,8 @@ namespace CharmControlLibrary
         protected virtual void OnDoubleClick(
             EventArgs e)
         {
-            if (this.DoubleClick != null)
-                this.DoubleClick(this, e);
+            if (DoubleClick != null)
+                DoubleClick(this, e);
         }
 
         /// <summary>
@@ -680,8 +679,8 @@ namespace CharmControlLibrary
         public void OnDragDrop(
             DragEventArgs e)
         {
-            if (this.DragDrop != null)
-                this.DragDrop(this, e);
+            if (DragDrop != null)
+                DragDrop(this, e);
         }
 
         /// <summary>
@@ -695,8 +694,8 @@ namespace CharmControlLibrary
         public void OnDragEnter(
             DragEventArgs e)
         {
-            if (this.DragEnter != null)
-                this.DragEnter(this, e);
+            if (DragEnter != null)
+                DragEnter(this, e);
         }
 
         /// <summary>
@@ -710,8 +709,8 @@ namespace CharmControlLibrary
         public void OnDragLeave(
             EventArgs e)
         {
-            if (this.DragLeave != null)
-                this.DragLeave(this, e);
+            if (DragLeave != null)
+                DragLeave(this, e);
         }
 
         /// <summary>
@@ -725,8 +724,8 @@ namespace CharmControlLibrary
         public void OnDragOver(
             DragEventArgs e)
         {
-            if (this.DragOver != null)
-                this.DragOver(this, e);
+            if (DragOver != null)
+                DragOver(this, e);
         }
 
         /// <summary>
@@ -740,8 +739,8 @@ namespace CharmControlLibrary
         public void OnEnabledChanged(
             EventArgs e)
         {
-            if (this.EnabledChanged != null)
-                this.EnabledChanged(this, e);
+            if (EnabledChanged != null)
+                EnabledChanged(this, e);
         }
 
         /// <summary>
@@ -755,8 +754,8 @@ namespace CharmControlLibrary
         public void OnGotFocus(
             EventArgs e)
         {
-            if (this.GotFocus != null)
-                this.GotFocus(this, e);
+            if (GotFocus != null)
+                GotFocus(this, e);
         }
 
         /// <summary>
@@ -770,8 +769,8 @@ namespace CharmControlLibrary
         protected virtual void OnInvalidated(
             InvalidateEventArgs e)
         {
-            if (this.Invalidated != null)
-                this.Invalidated(this, e);
+            if (Invalidated != null)
+                Invalidated(this, e);
         }
 
         /// <summary>
@@ -785,8 +784,8 @@ namespace CharmControlLibrary
         protected virtual void OnKeyDown(
             KeyEventArgs e)
         {
-            if (this.KeyDown != null)
-                this.KeyDown(this, e);
+            if (KeyDown != null)
+                KeyDown(this, e);
         }
 
         /// <summary>
@@ -800,8 +799,8 @@ namespace CharmControlLibrary
         protected virtual void OnKeyPress(
             KeyPressEventArgs e)
         {
-            if (this.KeyPress != null)
-                this.KeyPress(this, e);
+            if (KeyPress != null)
+                KeyPress(this, e);
         }
 
         /// <summary>
@@ -815,8 +814,8 @@ namespace CharmControlLibrary
         protected virtual void OnKeyUp(
             KeyEventArgs e)
         {
-            if (this.KeyUp != null)
-                this.KeyUp(this, e);
+            if (KeyUp != null)
+                KeyUp(this, e);
         }
 
         /// <summary>
@@ -830,8 +829,8 @@ namespace CharmControlLibrary
         protected virtual void OnLeave(
             EventArgs e)
         {
-            if (this.Leave != null)
-                this.Leave(this, e);
+            if (Leave != null)
+                Leave(this, e);
         }
 
         /// <summary>
@@ -845,8 +844,8 @@ namespace CharmControlLibrary
         protected virtual void OnLocationChanged(
             EventArgs e)
         {
-            if (this.LocationChanged != null)
-                this.LocationChanged(this, e);
+            if (LocationChanged != null)
+                LocationChanged(this, e);
         }
 
         /// <summary>
@@ -860,8 +859,8 @@ namespace CharmControlLibrary
         protected virtual void OnLostFocus(
             EventArgs e)
         {
-            if (this.LostFocus != null)
-                this.LostFocus(this, e);
+            if (LostFocus != null)
+                LostFocus(this, e);
         }
 
         /// <summary>
@@ -875,8 +874,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseClick(
             MouseEventArgs e)
         {
-            if (this.MouseClick != null)
-                this.MouseClick(this, e);
+            if (MouseClick != null)
+                MouseClick(this, e);
         }
 
         /// <summary>
@@ -890,8 +889,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseDoubleClick(
             MouseEventArgs e)
         {
-            if (this.MouseDoubleClick != null)
-                this.MouseDoubleClick(this, e);
+            if (MouseDoubleClick != null)
+                MouseDoubleClick(this, e);
         }
 
         /// <summary>
@@ -905,8 +904,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseDown(
             MouseEventArgs e)
         {
-            if (this.MouseDown != null)
-                this.MouseDown(this, e);
+            if (MouseDown != null)
+                MouseDown(this, e);
         }
 
         /// <summary>
@@ -920,8 +919,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseEnter(
             EventArgs e)
         {
-            if (this.MouseEnter != null)
-                this.MouseEnter(this, e);
+            if (MouseEnter != null)
+                MouseEnter(this, e);
         }
 
         /// <summary>
@@ -935,8 +934,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseHover(
             EventArgs e)
         {
-            if (this.MouseHover != null)
-                this.MouseHover(this, e);
+            if (MouseHover != null)
+                MouseHover(this, e);
         }
 
         /// <summary>
@@ -950,8 +949,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseLeave(
             EventArgs e)
         {
-            if (this.MouseLeave != null)
-                this.MouseLeave(this, e);
+            if (MouseLeave != null)
+                MouseLeave(this, e);
         }
 
         /// <summary>
@@ -965,8 +964,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseMove(
             MouseEventArgs e)
         {
-            if (this.MouseMove != null)
-                this.MouseMove(this, e);
+            if (MouseMove != null)
+                MouseMove(this, e);
         }
 
         /// <summary>
@@ -980,8 +979,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseUp(
             MouseEventArgs e)
         {
-            if (this.MouseUp != null)
-                this.MouseUp(this, e);
+            if (MouseUp != null)
+                MouseUp(this, e);
         }
 
         /// <summary>
@@ -995,8 +994,8 @@ namespace CharmControlLibrary
         protected virtual void OnMouseWheel(
             MouseEventArgs e)
         {
-            if (this.MouseWheel != null)
-                this.MouseWheel(this, e);
+            if (MouseWheel != null)
+                MouseWheel(this, e);
         }
 
         /// <summary>
@@ -1010,8 +1009,8 @@ namespace CharmControlLibrary
         protected virtual void OnMove(
             EventArgs e)
         {
-            if (this.Move != null)
-                this.Move(this, e);
+            if (Move != null)
+                Move(this, e);
         }
 
         /// <summary>
@@ -1025,8 +1024,8 @@ namespace CharmControlLibrary
         protected virtual void OnPaint(
             PaintEventArgs e)
         {
-            if (this.Paint != null)
-                this.Paint(this, e);
+            if (Paint != null)
+                Paint(this, e);
         }
 
         /// <summary>
@@ -1040,8 +1039,8 @@ namespace CharmControlLibrary
         protected virtual void OnPreviewKeyDown(
             PreviewKeyDownEventArgs e)
         {
-            if (this.PreviewKeyDown != null)
-                this.PreviewKeyDown(this, e);
+            if (PreviewKeyDown != null)
+                PreviewKeyDown(this, e);
         }
 
         /// <summary>
@@ -1055,8 +1054,8 @@ namespace CharmControlLibrary
         protected virtual void OnResize(
             EventArgs e)
         {
-            if (this.Resize != null)
-                this.Resize(this, e);
+            if (Resize != null)
+                Resize(this, e);
         }
 
         /// <summary>
@@ -1070,8 +1069,8 @@ namespace CharmControlLibrary
         protected virtual void OnSizeChanged(
             EventArgs e)
         {
-            if (this.SizeChanged != null)
-                this.SizeChanged(this, e);
+            if (SizeChanged != null)
+                SizeChanged(this, e);
         }
 
         /// <summary>
@@ -1085,8 +1084,8 @@ namespace CharmControlLibrary
         protected virtual void OnTextChanged(
             EventArgs e)
         {
-            if (this.TextChanged != null)
-                this.TextChanged(this, e);
+            if (TextChanged != null)
+                TextChanged(this, e);
         }
 
         /// <summary>
@@ -1100,8 +1099,8 @@ namespace CharmControlLibrary
         protected virtual void OnVisibleChanged(
             EventArgs e)
         {
-            if (this.VisibleChanged != null)
-                this.VisibleChanged(this, e);
+            if (VisibleChanged != null)
+                VisibleChanged(this, e);
         }
         #endregion
 
@@ -1142,39 +1141,38 @@ namespace CharmControlLibrary
             int height)
         {
             // * 版权声明 *
-            this.mProductName = "CharmControlLibrary";
-            this.mCompanyName = "CSBox工作室";
-            this.mProductVersion = "2.0.*";
+            mProductName = "CharmControlLibrary";
+            mCompanyName = "CSBox工作室";
+            mProductVersion = "2.0.*";
 
             // * 初始化属性 *
-            this.mText = text;
-            this.mLeft = left;
-            this.mTop = top;
-            this.mWidth = width;
-            this.mHeight = height;
+            mText = text;
+            mLeft = left;
+            mTop = top;
+            mWidth = width;
+            mHeight = height;
 
-            this.mBackgroundImage = new Bitmap(width, height);
-            this.mClientRectangle = new Rectangle(left, top, width, height);
-            this.mSize = mClientRectangle.Size;
-            this.mLocation = mClientRectangle.Location;
-            this.mClientSize = mClientRectangle.Size;
-            this.mControls = new List<CharmControl>();
-            this.mControlStatus = ControlStatus.Normal;
-            this.mCursor = Cursors.Arrow;
-            this.mFont = new Font("微软雅黑", 9);
-            this.mForeColor = Color.Black;
+            mBackgroundImage = new Bitmap(width, height);
+            mClientRectangle = new Rectangle(left, top, width, height);
+            mSize = mClientRectangle.Size;
+            mLocation = mClientRectangle.Location;
+            mClientSize = mClientRectangle.Size;
+            mControls = new List<CharmControl>();
+            mControlStatus = ControlStatus.Normal;
+            mCursor = Cursors.Arrow;
+            mFont = new Font("微软雅黑", 9);
+            mForeColor = Color.Black;
             Random rand = new Random();
-            this.mHandle = (IntPtr)rand.Next(100000, 999999);
-            this.mName = string.Empty;
-            this.mTabIndex = 0;
-            this.mIsTabStop = true;
-            this.mIsAllowDrop = false;
-            this.mIsEnabled = true;
-            this.mIsFocused = false;
-            this.mIsVisible = true;
+            mHandle = (IntPtr)rand.Next(100000, 999999);
+            mName = string.Empty;
+            mTabIndex = 0;
+            mIsTabStop = true;
+            mIsAllowDrop = false;
+            mIsEnabled = true;
+            mIsFocused = false;
+            mIsVisible = true;
 
             // * 释放系统资源 *
-            rand = null;
         }
         #endregion
 
@@ -1306,6 +1304,8 @@ namespace CharmControlLibrary
             Graphics g,
             List<CharmControl> controlList)
         {
+            if (controlList == null) return;
+
             // 绘制过程需要用到的变量
             Image imgControl = null;              // 控件图像资源
             Point ptControl = new Point(0, 0);  // 控件绘制坐标
@@ -1381,6 +1381,8 @@ namespace CharmControlLibrary
             MouseEventArgs e,
             List<CharmControl> controlList)
         {
+            if (controlList == null) return;
+
             // 轮询控件集合
             foreach (CharmControl control in controlList)
             {
@@ -1414,6 +1416,8 @@ namespace CharmControlLibrary
             List<CharmControl> controlList,
             Control parent)
         {
+            if (controlList == null) return false;
+
             // 过程需要用到的变量
             List<Rectangle> rectRedrawList = new List<Rectangle>(); // 重绘区域集合
 
@@ -1446,8 +1450,7 @@ namespace CharmControlLibrary
                     case ControlType.CharmButton:
                         if (control.ControlStatus == ControlStatus.Unenabled)   // 判断按钮是否为禁止态
                             break;
-                        else
-                            goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
+                        goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
                     case ControlType.CharmCheckBox:     // 此处无实际作用，只为成功触发鼠标单击事件，否则会自动转为移动窗体事件
                     case ControlType.CharmLinkLabel:
                         if (control.ClientRectangle.Contains(e.Location))     // 判断是否在控件工作区内
@@ -1492,6 +1495,8 @@ namespace CharmControlLibrary
             Control parent,
             ToolTip toolTip)
         {
+            if (controlList == null) return;
+
             // 过程需要用到的变量
             List<Rectangle> rectRedrawList = new List<Rectangle>(); // 重绘区域集合
 
@@ -1529,8 +1534,7 @@ namespace CharmControlLibrary
                     case ControlType.CharmButton:
                         if (control.ControlStatus == ControlStatus.Unenabled)   // 判断按钮是否为禁止态
                             break;
-                        else
-                            goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
+                        goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
                     case ControlType.CharmCheckBox:
                     case ControlType.CharmLinkLabel:
                         if (control.ClientRectangle.Contains(e.Location))     // 判断是否在控件工作区内
@@ -1572,6 +1576,8 @@ namespace CharmControlLibrary
             List<CharmControl> controlList,
             Control parent)
         {
+            if (controlList == null) return;
+
             // 过程需要用到的变量
             List<Rectangle> rectRedrawList = new List<Rectangle>(); // 重绘区域集合
 
@@ -1604,8 +1610,7 @@ namespace CharmControlLibrary
                     case ControlType.CharmButton:
                         if (control.ControlStatus == ControlStatus.Unenabled)   // 判断按钮是否为禁止态
                             break;
-                        else
-                            goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
+                        goto case ControlType.CharmSysButton;   // 非禁止态处理过程与系统按钮一致
                 }
             }
 
