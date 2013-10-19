@@ -121,11 +121,11 @@ namespace CharmControlLibrary
         // 控件的工作区的高度和宽度
         private Size mClientSize;
         // 控件的应用程序的公司名称或创建者
-        private string mCompanyName;
+        private readonly string mCompanyName;
         // 控件关联的快捷菜单
         private CharmMenu mContextMenu;
         // 包含在控件内的控件的集合
-        private List<CharmControl> mControls;
+        private readonly List<CharmControl> mControls;
         // 控件的状态
         private ControlStatus mControlStatus;
         // 控件的类型
@@ -133,9 +133,9 @@ namespace CharmControlLibrary
         // 当鼠标指针位于控件上时显示的光标
         private Cursor mCursor;
         // 指示控件是否有输入焦点
-        private bool mIsFocused;
+        private readonly bool mIsFocused;
         // 控件绑定到的窗口句柄
-        private IntPtr mHandle;
+        private readonly IntPtr mHandle;
         // 控件的高度
         private int mHeight;
         // 控件的名称
@@ -143,9 +143,9 @@ namespace CharmControlLibrary
         // 控件的父容器
         private Control mParent;
         // 包含控件的程序集的产品名称
-        private string mProductName;
+        private readonly string mProductName;
         // 包含控件的程序集的版本
-        private string mProductVersion;
+        private readonly string mProductVersion;
         // 在控件的容器的控件的 Tab 键顺序
         private int mTabIndex;
         // 指示用户能否使用 Tab 键将焦点放到该控件上
@@ -1615,13 +1615,12 @@ namespace CharmControlLibrary
             }
 
             // 判断是否存在需要重绘的控件
-            if (rectRedrawList.Count > 0)
-            {
-                Rectangle rectRedraw = rectRedrawList[0];
-                for (int i = 1; i < rectRedrawList.Count; i++)
-                    rectRedraw = Rectangle.Union(rectRedraw, rectRedrawList[i]);
-                parent.Invalidate(rectRedraw);
-            }
+            if (rectRedrawList.Count <= 0) return;
+
+            Rectangle rectRedraw = rectRedrawList[0];
+            for (int i = 1; i < rectRedrawList.Count; i++)
+                rectRedraw = Rectangle.Union(rectRedraw, rectRedrawList[i]);
+            parent.Invalidate(rectRedraw);
         }
         #endregion
     }

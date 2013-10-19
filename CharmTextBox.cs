@@ -18,12 +18,11 @@
 
 #region 命名空间引用
 using System;
-using System.Text;
 using System.Drawing;
 using System.Windows.Forms;
-using System.Collections.Generic;
-
 using CharmCommonMethod;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -32,7 +31,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 文本框输入模式：通常方式，只读方式，密码输入，整数输入
     /// </summary>
-    public enum InputMode : int
+    public enum InputMode
     {
         /// <summary>
         /// 通常方式，允许用户对文本框进行所有操作
@@ -110,7 +109,7 @@ namespace CharmControlLibrary
                 // 如果输入类型为只读类型或密码输入则无水印效果
                 if (mInputMode == InputMode.ReadOnly || mInputMode == InputMode.Password)
                 {
-                    this.mWatermark = null;
+                    mWatermark = null;
                     if (mInputMode == InputMode.Password)
                         mTextbox.PasswordChar = '●';     // 密码输入
                 }
@@ -122,10 +121,10 @@ namespace CharmControlLibrary
         /// </summary>
         public string Watermark
         {
-            get { return this.mWatermark; }
+            get { return mWatermark; }
             set
             {
-                this.mWatermark = value;
+                mWatermark = value;
                 // 判断文本是否为空
                 if (string.Equals(mTextbox.Text, string.Empty))
                 {
@@ -206,8 +205,8 @@ namespace CharmControlLibrary
         private void TextBox_MouseEnter(object sender, EventArgs e)
         {
             // 修改背景
-            this.mControlStatus = ControlStatus.Hover;
-            this.Invalidate();
+            mControlStatus = ControlStatus.Hover;
+            Invalidate();
 
             // 判断是否有水印
             if (mWatermark != null)
@@ -225,8 +224,8 @@ namespace CharmControlLibrary
         private void TextBox_MouseLeave(object sender, EventArgs e)
         {
             // 修改背景
-            this.mControlStatus = ControlStatus.Normal;
-            this.Invalidate();
+            mControlStatus = ControlStatus.Normal;
+            Invalidate();
 
             // 判断是否拥有焦点且有水印
             if (!mTextbox.Focused)
@@ -300,15 +299,15 @@ namespace CharmControlLibrary
         // 文本框被双击事件
         private void mTextbox_DoubleClick(object sender, EventArgs e)
         {
-            if (this.DoubleClick != null)
-                this.DoubleClick(sender, e);
+            if (DoubleClick != null)
+                DoubleClick(sender, e);
         }
 
         // 文本改变事件
         private void mTextbox_TextChanged(object sender, EventArgs e)
         {
-            if (this.TextChanged != null)
-                this.TextChanged(sender, e);
+            if (TextChanged != null)
+                TextChanged(sender, e);
         }
         #endregion
 
@@ -320,14 +319,14 @@ namespace CharmControlLibrary
             : base()
         {
             // * 初始化属性 *
-            this.Size = new Size(160, 26);
-            this.BackColor = Color.White;
-            this.mStatusImages = new Image[2];
-            this.mStatusImages[0] = Properties.Resources.textbox_bkg_normal;
+            Size = new Size(160, 26);
+            BackColor = Color.White;
+            mStatusImages = new Image[2];
+            mStatusImages[0] = Resources.textbox_bkg_normal;
             // 去除常态背景空白部分
-            this.mStatusImages[0] =
+            mStatusImages[0] =
                 ImageOperation.GetPartOfImage(mStatusImages[0], mStatusImages[0].Width, mStatusImages[0].Height - 2, 0, 1);
-            this.mStatusImages[1] = Properties.Resources.textbox_bkg_hover;
+            mStatusImages[1] = Resources.textbox_bkg_hover;
             // 重新设置文本框大小
             mStatusImages[0] = ImageOperation.ResizeImageWithoutBorder(mStatusImages[0], 2, 1, 2, 1, base.Size);
             mStatusImages[1] = ImageOperation.ResizeImageWithoutBorder(mStatusImages[1], 2, 2, 2, 2, base.Size);
@@ -337,7 +336,7 @@ namespace CharmControlLibrary
             mTextbox.BorderStyle = BorderStyle.None; // 无边框
             mTextbox.Font = new Font("微软雅黑", 9.75F);   // 字体
             mTextbox.Size = new Size(156, 20);    // 大小
-            mTextbox.Location = new Point(2, (this.Height - mTextbox.Height) / 2);   // 位置
+            mTextbox.Location = new Point(2, (Height - mTextbox.Height) / 2);   // 位置
             mTextbox.ImeMode = ImeMode.NoControl; // 输入法设置
             // 设置水印
             if (mWatermark != null)
@@ -359,7 +358,7 @@ namespace CharmControlLibrary
             mTextbox.TextChanged += new EventHandler(mTextbox_TextChanged);
 
             // * 加载控件到控件集合中 *
-            this.Controls.Add(mTextbox);
+            Controls.Add(mTextbox);
         }
         #endregion
 

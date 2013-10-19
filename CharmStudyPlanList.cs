@@ -14,15 +14,14 @@
 
 #region 命名空间引用
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Collections;
-using System.Collections.Generic;
 using System.ComponentModel;
 
 using CharmCommonMethod;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -49,8 +48,8 @@ namespace CharmControlLibrary
         /// </summary>
         public StudyPlanListBoxItem MouseItem
         {
-            get { return this.mMouseItem; }
-            set { this.mMouseItem = value; }
+            get { return mMouseItem; }
+            set { mMouseItem = value; }
         }
 
         /// <summary>
@@ -70,8 +69,8 @@ namespace CharmControlLibrary
         /// </summary>
         public int ButtonHighlightInedx
         {
-            get { return this.buttonHighlightIndex; }
-            set { this.buttonHighlightIndex = value; }
+            get { return buttonHighlightIndex; }
+            set { buttonHighlightIndex = value; }
         }
 
         /// <summary>
@@ -79,11 +78,11 @@ namespace CharmControlLibrary
         /// </summary>
         public int ButtonDownIndex
         {
-            get { return this.buttonDownIndex; }
-            set { this.buttonDownIndex = value; }
+            get { return buttonDownIndex; }
+            set { buttonDownIndex = value; }
         }
 
-        internal ListBox.ObjectCollection OldItems
+        internal ObjectCollection OldItems
         {
             get { return base.Items; }
         }
@@ -101,14 +100,14 @@ namespace CharmControlLibrary
             // 循环绘制每项
             for (int i = 0; i < Items.Count; i++)
             {
-                Rectangle bounds = this.GetItemRectangle(i);
+                Rectangle bounds = GetItemRectangle(i);
                 StudyPlanListBoxItem item = Items[i];
                 // 绘制表项分界线
                 Pen p = new Pen(Brushes.LightGray);
                 //p.DashStyle = DashStyle.Dash;
-                g.DrawLine(p, new Point(0, bounds.Top), new Point(this.Width, bounds.Top));
+                g.DrawLine(p, new Point(0, bounds.Top), new Point(Width, bounds.Top));
                 // 绘制表项背景
-                if (this.SelectedIndex != i)
+                if (SelectedIndex != i)
                 {
                     Color backColor = Color.FromArgb(20, 216, 211, 211);
                     using (SolidBrush brush = new SolidBrush(backColor))
@@ -122,7 +121,7 @@ namespace CharmControlLibrary
                         new Rectangle(bounds.X, bounds.Y + 1, bounds.Width, bounds.Height - 1));
 
                 // 高亮非选中项
-                if (mMouseItem == Items[i] && this.SelectedIndex != i)
+                if (mMouseItem == Items[i] && SelectedIndex != i)
                 {
                     Color backColor = Color.FromArgb(200, 192, 224, 248);
                     using (SolidBrush brush = new SolidBrush(backColor))
@@ -143,7 +142,7 @@ namespace CharmControlLibrary
 
                 // 判断教程标识，转换不同类别
                 string configPath = Application.StartupPath + "\\Config\\Config.ini";
-                string planType = INIOperation.ReadValue(configPath, "coursetype", item.CourseType);
+                string planType = IniOperation.ReadValue(configPath, "coursetype", item.CourseType);
                 g.DrawString(planType, new Font("微软雅黑", 9, FontStyle.Bold), Brushes.Black, bounds.Left + 310, bounds.Top + 3);
 
                 // 判断教程级别，指定不同颜色
@@ -187,9 +186,9 @@ namespace CharmControlLibrary
                 if (progress == 0)
                     progress = 0.01;
                 g.DrawString("教程学习进度：", new Font("微软雅黑", 9), Brushes.Black, bounds.Left + 5, bounds.Top + 45);
-                g.DrawImage(new Bitmap(Properties.Resources.timeprogressbg, new Size(200, 18)), 
+                g.DrawImage(new Bitmap(Resources.timeprogressbg, new Size(200, 18)), 
                     new Point(bounds.Left + 95, bounds.Top + 44));
-                g.DrawImage(new Bitmap(Properties.Resources.time_progress_fg_lightGreen, new Size((int)(200 * progress), 18)), 
+                g.DrawImage(new Bitmap(Resources.time_progress_fg_lightGreen, new Size((int)(200 * progress), 18)), 
                     new Point(bounds.Left + 95, bounds.Top + 44));
                 g.DrawString("取消订阅教程", new Font("微软雅黑", 9), Brushes.Blue, bounds.Left + 330, bounds.Top + 45);
 
@@ -197,7 +196,7 @@ namespace CharmControlLibrary
                 // 按下态
                 if (buttonDownIndex == i)
                 {
-                    g.DrawImage(Properties.Resources.btn_big_down,
+                    g.DrawImage(Resources.btn_big_down,
                         new Rectangle(new Point(bounds.Left + 445, bounds.Top + 27), new Size(100, 30)));
                     g.DrawString("开始学习", new Font("微软雅黑", 10), Brushes.DarkGreen, bounds.Left + 467, bounds.Top + 32);
                 }
@@ -205,15 +204,15 @@ namespace CharmControlLibrary
                 {
                     // 高亮态
                     if (buttonHighlightIndex == i)
-                        g.DrawImage(Properties.Resources.btn_big_hover,
+                        g.DrawImage(Resources.btn_big_hover,
                             new Rectangle(new Point(bounds.Left + 445, bounds.Top + 27), new Size(100, 30)));
                     else
-                        g.DrawImage(Properties.Resources.btn_big_normal,
+                        g.DrawImage(Resources.btn_big_normal,
                             new Rectangle(new Point(bounds.Left + 445, bounds.Top + 27), new Size(100, 30)));
                     g.DrawString("开始学习", new Font("微软雅黑", 10), Brushes.DarkGreen, bounds.Left + 466, bounds.Top + 31);
                 }
 
-                g.DrawLine(p, new Point(0, bounds.Top + 65), new Point(this.Width, bounds.Top + 65));
+                g.DrawLine(p, new Point(0, bounds.Top + 65), new Point(Width, bounds.Top + 65));
                 p.Dispose();
             }
             //base.OnPaint(e);
@@ -245,7 +244,7 @@ namespace CharmControlLibrary
                 bool isChange = false;  // 指示是否改变
                 for (int i = 0; i < Items.Count; i++)
                 {
-                    Rectangle bounds = this.GetItemRectangle(i);
+                    Rectangle bounds = GetItemRectangle(i);
                     if (bounds.Contains(e.X, e.Y))
                     {
                         if (e.X > 445 && e.X < 545 && e.Y > (27 + bounds.Y) && e.Y < (57 + bounds.Y))
@@ -268,7 +267,7 @@ namespace CharmControlLibrary
                 }
 
                 if (isChange)
-                    this.Invalidate();
+                    Invalidate();
             }
             base.OnMouseDown(e);
         }
@@ -284,7 +283,7 @@ namespace CharmControlLibrary
             // 轮询表项
             for (int i = 0; i < Items.Count; i++)
             {
-                bounds = this.GetItemRectangle(i);
+                bounds = GetItemRectangle(i);
                 if (bounds.Contains(e.X, e.Y))
                 {
                     if (e.X > 445 && e.X < 545 && e.Y > (27 + bounds.Y) && e.Y < (57 + bounds.Y))
@@ -298,9 +297,9 @@ namespace CharmControlLibrary
                     else if (e.X > 330 && e.X < 410 && e.Y > (45 + bounds.Y) && e.Y < (64 + bounds.Y))
                     {
                         buttonDownIndex = -1;
-                        if (this.Cursor != Cursors.Hand)
+                        if (Cursor != Cursors.Hand)
                         {
-                            this.Cursor = Cursors.Hand;
+                            Cursor = Cursors.Hand;
                             if (Items[i] != mMouseItem)
                                 mMouseItem = Items[i];
                             break;
@@ -309,8 +308,8 @@ namespace CharmControlLibrary
                     else
                     {
                         buttonDownIndex = -1;
-                        if (this.Cursor != Cursors.Arrow)
-                            this.Cursor = Cursors.Arrow;
+                        if (Cursor != Cursors.Arrow)
+                            Cursor = Cursors.Arrow;
 
                         if (buttonHighlightIndex == i)
                         {
@@ -333,15 +332,15 @@ namespace CharmControlLibrary
             // 判断鼠标指针是否悬浮在空白区域
             if (Items.Count > 0)
             {
-                bounds = this.GetItemRectangle(Items.Count - 1);
+                bounds = GetItemRectangle(Items.Count - 1);
                 if (e.Y > (65 + bounds.Y))
                 {
-                    if (this.Cursor != Cursors.Arrow)
-                        this.Cursor = Cursors.Arrow;
+                    if (Cursor != Cursors.Arrow)
+                        Cursor = Cursors.Arrow;
                 }
 
                 if (isChange)
-                    this.Invalidate();
+                    Invalidate();
             }
             base.OnMouseMove(e);
         }
@@ -358,7 +357,7 @@ namespace CharmControlLibrary
                 bool isChange = false;  // 指示是否改变
                 for (int i = 0; i < Items.Count; i++)
                 {
-                    Rectangle bounds = this.GetItemRectangle(i);
+                    Rectangle bounds = GetItemRectangle(i);
                     if (bounds.Contains(e.X, e.Y))
                     {
                         if (e.X > 330 && e.X < 410 && e.Y > (45 + bounds.Y) && e.Y < (65 + bounds.Y))
@@ -382,7 +381,7 @@ namespace CharmControlLibrary
                 }
 
                 if (isChange)
-                    this.Invalidate();
+                    Invalidate();
             }
             base.OnMouseUp(e);
         }
@@ -393,8 +392,8 @@ namespace CharmControlLibrary
         /// <param name="e"></param>
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
-            mMouseItem = Items[this.SelectedIndex];
-            this.Invalidate();
+            mMouseItem = Items[SelectedIndex];
+            Invalidate();
             base.OnSelectedIndexChanged(e);
         }
         #endregion
@@ -406,14 +405,14 @@ namespace CharmControlLibrary
         public CharmStudyPlanList()
             : base()
         {
-            this.mItems = new StudyPlanListBoxItemCollection(this);
+            mItems = new StudyPlanListBoxItemCollection(this);
             base.DrawMode = DrawMode.OwnerDrawVariable;
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.DoubleBuffer, true);// 双缓冲
-            this.SetStyle(ControlStyles.ResizeRedraw, true);//调整大小时重绘
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);// 双缓冲            
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);// 双缓冲
+            SetStyle(ControlStyles.ResizeRedraw, true);//调整大小时重绘
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);// 双缓冲            
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
             // 初始化属性
             buttonHighlightIndex = -1;
@@ -539,8 +538,8 @@ namespace CharmControlLibrary
         /// </summary>
         public int ClickAreaIndex
         {
-            get { return this.mClickAreaIndex; }
-            set { this.mClickAreaIndex = value; }
+            get { return mClickAreaIndex; }
+            set { mClickAreaIndex = value; }
         }
         #endregion
 
@@ -576,16 +575,16 @@ namespace CharmControlLibrary
             string latestStudy,
             string relatedResIDs)
         {
-            this.mStudyPlanID = studyPlanID;
-            this.mCourseName = courseName;
-            this.mCourseType = courseType;
-            this.mCourseLevel = courseLevel;
-            this.mStartDate = startDate;
-            this.mStudyProgress = studyProgress;
-            this.mEndDate = endDate;
-            this.mLatestStudy = latestStudy;
-            this.mRelatedResIDs = relatedResIDs;
-            this.mClickAreaIndex = -1;
+            mStudyPlanID = studyPlanID;
+            mCourseName = courseName;
+            mCourseType = courseType;
+            mCourseLevel = courseLevel;
+            mStartDate = startDate;
+            mStudyProgress = studyProgress;
+            mEndDate = endDate;
+            mLatestStudy = latestStudy;
+            mRelatedResIDs = relatedResIDs;
+            mClickAreaIndex = -1;
         }
         #endregion
 

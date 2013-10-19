@@ -20,6 +20,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 using CharmCommonMethod;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -28,7 +30,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 消息框类型：蓝色天空
     /// </summary>
-    public enum MessageBoxType : int
+    public enum MessageBoxType
     {
         /// <summary>
         /// 消息框类型：蓝色天空
@@ -43,7 +45,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 消息框图标：询问，错误，信息，正常，警告
     /// </summary>
-    public enum CharmMessageBoxIcon : int
+    public enum CharmMessageBoxIcon
     {
         /// <summary>
         /// 没有消息框图标
@@ -106,8 +108,8 @@ namespace CharmControlLibrary
         /// </summary>
         public MessageBoxType MessageBoxType
         {
-            get { return this.mMessageBoxType; }
-            set { this.mMessageBoxType = value; }
+            get { return mMessageBoxType; }
+            set { mMessageBoxType = value; }
         }
 
         /// <summary>
@@ -115,8 +117,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Image CustomizeBackgourndImage
         {
-            get { return this.mCustomizeBackgourndImage; }
-            set { this.mCustomizeBackgourndImage = value; }
+            get { return mCustomizeBackgourndImage; }
+            set { mCustomizeBackgourndImage = value; }
         }
 
         /// <summary>
@@ -124,8 +126,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Color TitleColor
         {
-            get { return this.mTitleColor; }
-            set { this.mTitleColor = value; }
+            get { return mTitleColor; }
+            set { mTitleColor = value; }
         }
 
         /// <summary>
@@ -133,8 +135,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Color TextColor
         {
-            get { return this.mTextColor; }
-            set { this.mTextColor = value; }
+            get { return mTextColor; }
+            set { mTextColor = value; }
         }
 
         /// <summary>
@@ -142,8 +144,8 @@ namespace CharmControlLibrary
         /// </summary>
         public CharmCheckBox CheckBox
         {
-            get { return this.mCheckBox; }
-            set { this.mCheckBox = value; }
+            get { return mCheckBox; }
+            set { mCheckBox = value; }
         }
         #endregion
 
@@ -155,28 +157,28 @@ namespace CharmControlLibrary
         {
             InitializeComponent();
             // 设置窗体阴影特效
-            APIOperation.FormBorderShadow(this.Handle);
+            APIOperation.FormBorderShadow(Handle);
             // * 设置双缓冲模式 *
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
+            SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
                                ControlStyles.OptimizedDoubleBuffer | //双缓冲
                                ControlStyles.UserPaint, //使用自定义的重绘事件,减少闪烁
                                true);
-            this.UpdateStyles();
+            UpdateStyles();
 
             // * 初始化属性 *
-            this.TopMost = true;
-            this.FormBorderStyle = FormBorderStyle.None;
-            this.StartPosition = FormStartPosition.CenterParent;
-            this.Width = 350;
+            TopMost = true;
+            FormBorderStyle = FormBorderStyle.None;
+            StartPosition = FormStartPosition.CenterParent;
+            Width = 350;
 
-            this.mTitleColor = Color.White;
-            this.mTextColor = Color.Black;
+            mTitleColor = Color.White;
+            mTextColor = Color.Black;
 
             // 创建控件集合
             CharmControls = new List<CharmControl>();
 
             // 创建用户按钮
-            this.mButtons = new CharmButton[3];
+            mButtons = new CharmButton[3];
             for (int i = 0; i < mButtons.Length; i++)
             {
                 mButtons[i] = new CharmButton();
@@ -187,14 +189,14 @@ namespace CharmControlLibrary
             }
 
             // 创建检查框
-            this.mCheckBox = new CharmCheckBox();
-            this.mCheckBox.Visible = false;
+            mCheckBox = new CharmCheckBox();
+            mCheckBox.Visible = false;
             CharmControls.Add(mCheckBox);
 
             // 创建关闭按钮
             CharmSysButton btnClose = new CharmSysButton();
             btnClose.SysButtonType = SysButtonType.Close;
-            btnClose.Location = new Point(this.Width - 46, 1);
+            btnClose.Location = new Point(Width - 46, 1);
             btnClose.MouseClick += new MouseEventHandler(btnClose_MouseClick);
             CharmControls.Add(btnClose);
         }
@@ -291,7 +293,7 @@ namespace CharmControlLibrary
             // 设置对话框结果
             mDialogResult = DialogResult.Cancel;
             // 关闭窗口并返回结果
-            this.Close();
+            Close();
         }
 
         // 按钮鼠标单击事件
@@ -324,7 +326,7 @@ namespace CharmControlLibrary
             }
 
             // 关闭窗口并返回结果
-            this.Close();
+            Close();
         }
         #endregion
 
@@ -339,7 +341,7 @@ namespace CharmControlLibrary
             string messageBoxText,
             string caption)
         {
-            return this.Show(messageBoxText, caption, MessageBoxButtons.OK, CharmMessageBoxIcon.Infomation, DialogResult.OK);
+            return Show(messageBoxText, caption, MessageBoxButtons.OK, CharmMessageBoxIcon.Infomation, DialogResult.OK);
         }
 
         /// <summary>
@@ -354,7 +356,7 @@ namespace CharmControlLibrary
             string caption,
             MessageBoxButtons button)
         {
-            return this.Show(messageBoxText, caption, button, CharmMessageBoxIcon.Infomation, DialogResult.OK);
+            return Show(messageBoxText, caption, button, CharmMessageBoxIcon.Infomation, DialogResult.OK);
         }
 
         /// <summary>
@@ -371,7 +373,7 @@ namespace CharmControlLibrary
             MessageBoxButtons button,
             CharmMessageBoxIcon icon)
         {
-            return this.Show(messageBoxText, caption, button, icon, DialogResult.OK);
+            return Show(messageBoxText, caption, button, icon, DialogResult.OK);
         }
 
         /// <summary>
@@ -424,27 +426,27 @@ namespace CharmControlLibrary
 
             // 计算需要绘制的文本高度
             Graphics g = CreateGraphics();
-            SizeF sf = g.MeasureString(messageBoxText, new Font("微软雅黑", 9), this.Width - 90);
+            SizeF sf = g.MeasureString(messageBoxText, new Font("微软雅黑", 9), Width - 90);
             // 修改窗体高度
-            this.Height = (int)sf.Height + 120;
+            Height = (int)sf.Height + 120;
             // 根据消息框类型设置背景图像资源并修改尺寸
             switch (MessageBoxType)
             {
                 case MessageBoxType.BlueSky:
-                    this.BackgroundImage = Properties.Resources.messagebox_bluesky;
-                    this.BackgroundImage =
-                        ImageOperation.ResizeImageWithoutBorder(this.BackgroundImage, 2, 30, 2, 2, this.Size);
+                    BackgroundImage = Resources.messagebox_bluesky;
+                    BackgroundImage =
+                        ImageOperation.ResizeImageWithoutBorder(BackgroundImage, 2, 30, 2, 2, Size);
                     break;
                 case MessageBoxType.Customize:
                     if (mCustomizeBackgourndImage == null)  // 检查用户是否完成对消息框的初始化
                         throw new ArgumentNullException(
                             "CharmControlLibrary.CharmMessageBox：未指定自定义消息框类型的背景图像资源.\n" +
-                            "Name: " + this.Name);
-                    this.BackgroundImage = new Bitmap(mCustomizeBackgourndImage, this.Size);
+                            "Name: " + Name);
+                    BackgroundImage = new Bitmap(mCustomizeBackgourndImage, Size);
                     break;
             }
 
-            using (g = Graphics.FromImage(this.BackgroundImage))
+            using (g = Graphics.FromImage(BackgroundImage))
             {
                 // 绘制标题栏文本
                 g.DrawString(caption, new Font("微软雅黑", 10, FontStyle.Bold), new SolidBrush(mTitleColor), new Point(8, 6));
@@ -454,24 +456,24 @@ namespace CharmControlLibrary
                     case CharmMessageBoxIcon.None:
                         break;
                     case CharmMessageBoxIcon.Question:
-                        g.DrawImage(Properties.Resources.messageboxicon_question,
-                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Properties.Resources.messageboxicon_question.Size));
+                        g.DrawImage(Resources.messageboxicon_question,
+                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Resources.messageboxicon_question.Size));
                         break;
                     case CharmMessageBoxIcon.Error:
-                        g.DrawImage(Properties.Resources.messageboxicon_error,
-                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Properties.Resources.messageboxicon_error.Size));
+                        g.DrawImage(Resources.messageboxicon_error,
+                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Resources.messageboxicon_error.Size));
                         break;
                     case CharmMessageBoxIcon.Infomation:
-                        g.DrawImage(Properties.Resources.messageboxicon_info,
-                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Properties.Resources.messageboxicon_info.Size));
+                        g.DrawImage(Resources.messageboxicon_info,
+                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Resources.messageboxicon_info.Size));
                         break;
                     case CharmMessageBoxIcon.Ok:
-                        g.DrawImage(Properties.Resources.messageboxicon_ok,
-                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Properties.Resources.messageboxicon_ok.Size));
+                        g.DrawImage(Resources.messageboxicon_ok,
+                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Resources.messageboxicon_ok.Size));
                         break;
                     case CharmMessageBoxIcon.Warning:
-                        g.DrawImage(Properties.Resources.messageboxicon_warning,
-                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Properties.Resources.messageboxicon_warning.Size));
+                        g.DrawImage(Resources.messageboxicon_warning,
+                            new Rectangle(new Point(27, (int)sf.Height / 2 + 50), Resources.messageboxicon_warning.Size));
                         break;
                 }
                 // 绘制消息文本
@@ -488,7 +490,7 @@ namespace CharmControlLibrary
             CharmControls[3].Location = new Point(30, (int)sf.Height + 84);
 
             // 显示消息框
-            this.ShowDialog();
+            ShowDialog();
             return mDialogResult;
         }
         #endregion

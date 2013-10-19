@@ -19,6 +19,8 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 
 using CharmCommonMethod;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -27,7 +29,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 菜单类型：QQ、QQ软件管家
     /// </summary>
-    public enum MenuType : int
+    public enum MenuType
     {
         /// <summary>
         /// 菜单类型：QQ
@@ -42,7 +44,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 菜单项类型：文本项、分割线
     /// </summary>
-    public enum MenuItemType : int
+    public enum MenuItemType
     {
         /// <summary>
         /// 菜单项类型：文本项
@@ -95,8 +97,8 @@ namespace CharmControlLibrary
         /// </summary>
         public MenuType MenuType
         {
-            get { return this.mMenuType; }
-            set { this.mMenuType = value; }
+            get { return mMenuType; }
+            set { mMenuType = value; }
         }
 
         /// <summary>
@@ -104,8 +106,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Image CustomizeBackgourndImage
         {
-            get { return this.mCustomizeBackgourndImage; }
-            set { this.mCustomizeBackgourndImage = value; }
+            get { return mCustomizeBackgourndImage; }
+            set { mCustomizeBackgourndImage = value; }
         }
         #endregion
 
@@ -117,18 +119,18 @@ namespace CharmControlLibrary
         {
             InitializeComponent();
             // 设置窗体阴影特效
-            APIOperation.FormBorderShadow(this.Handle);
+            APIOperation.FormBorderShadow(Handle);
             // * 设置双缓冲模式 *
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
+            SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
                                ControlStyles.OptimizedDoubleBuffer | //双缓冲
                                ControlStyles.UserPaint, //使用自定义的重绘事件,减少闪烁
                                true);
-            this.UpdateStyles();
+            UpdateStyles();
 
             // * 初始化属性 *
-            this.TopMost = true;
-            this.ShowInTaskbar = false;
-            this.FormBorderStyle = FormBorderStyle.None;
+            TopMost = true;
+            ShowInTaskbar = false;
+            FormBorderStyle = FormBorderStyle.None;
 
             mItems = new List<MenuItem>();
             mSelectedIndex = -1;
@@ -137,14 +139,14 @@ namespace CharmControlLibrary
         // 窗体失去焦点事件，用于隐藏窗体
         private void CharmMenu_Deactivate(object sender, EventArgs e)
         {
-            this.Visible = false;
+            Visible = false;
         }
 
         // 窗体可见性改变事件，用于重新设置窗体属性
         private void CharmMenu_VisibleChanged(object sender, EventArgs e)
         {
             // 判断窗体是否变为可见
-            if (this.Visible)
+            if (Visible)
             {
                 // 窗体长度及宽度
                 int formWidth = 0;
@@ -166,7 +168,7 @@ namespace CharmControlLibrary
                         if (mMenuType != MenuType.QQ)
                             throw new ArgumentException(
                                 "CharmControlLibrary.CharmMenu：当前菜单类型不支持分割线.\n" +
-                                "Name: " + this.Name);
+                                "Name: " + Name);
                         formHeight += 3;    // 分割线
                     }
                     else
@@ -174,7 +176,7 @@ namespace CharmControlLibrary
                         // 文本项
                         formHeight += 22;
                         // 计算绘制文本所需的像素
-                        sf = g.MeasureString(menuItem.Text, this.Font);
+                        sf = g.MeasureString(menuItem.Text, Font);
                         // 判断当前项文本所需像素是否大于之前项
                         if ((int)sf.Width > formWidth)
                             formWidth = (int)sf.Width;
@@ -183,24 +185,24 @@ namespace CharmControlLibrary
 
                 Bitmap imgTemp = null;
                 // 设置窗体长度及宽度
-                this.Width = formWidth + 28 + 18;
-                this.Height = formHeight + 4;
+                Width = formWidth + 28 + 18;
+                Height = formHeight + 4;
 
                 // 根据菜单类型设置窗体背景
                 switch (mMenuType)
                 {
                     case MenuType.QQ:
-                        imgTemp = new Bitmap(Properties.Resources.menu_bkg_qq);
+                        imgTemp = new Bitmap(Resources.menu_bkg_qq);
                         imgTemp = ImageOperation.ResizeImageWithoutBorder(
-                                            imgTemp, 29, 2, 2, 2, new Size(this.Width, this.Height));
+                                            imgTemp, 29, 2, 2, 2, new Size(Width, Height));
                         break;
                     case MenuType.QQSoftMgr:
-                        imgTemp = new Bitmap(Properties.Resources.menu_bkg_qqsoftmgr);
+                        imgTemp = new Bitmap(Resources.menu_bkg_qqsoftmgr);
                         imgTemp = ImageOperation.ResizeImageWithoutBorder(
-                                  imgTemp, 29, 2, 2, 2, new Size(this.Width, this.Height));
+                                  imgTemp, 29, 2, 2, 2, new Size(Width, Height));
                         break;
                 }
-                this.BackgroundImage = new Bitmap(imgTemp);
+                BackgroundImage = new Bitmap(imgTemp);
 
                 // 释放系统资源
                 g.Dispose();
@@ -209,16 +211,16 @@ namespace CharmControlLibrary
                 // 设置窗体显示的位置
                 Rectangle rect = Screen.GetWorkingArea(this);
                 // 判断是否有足够空间在光标右侧弹出菜单
-                if ((rect.Width - MousePosition.X) > this.Width)
-                    this.Left = MousePosition.X;     // 有足够空间
+                if ((rect.Width - MousePosition.X) > Width)
+                    Left = MousePosition.X;     // 有足够空间
                 else
-                    this.Left = MousePosition.X - this.Width;   // 没有足够空间
+                    Left = MousePosition.X - Width;   // 没有足够空间
 
                 // 判断是否有足够空间在光标下方弹出菜单
-                if ((rect.Height - MousePosition.Y) > this.Height)
-                    this.Top = MousePosition.Y;     // 有足够空间
+                if ((rect.Height - MousePosition.Y) > Height)
+                    Top = MousePosition.Y;     // 有足够空间
                 else
-                    this.Top = MousePosition.Y - this.Height;   // 没有足够空间
+                    Top = MousePosition.Y - Height;   // 没有足够空间
             }
         }
 
@@ -228,7 +230,7 @@ namespace CharmControlLibrary
             // 过程中需要用到的变量
             MenuItem menuItem;
             int formHeight = 0;
-            int pointY = MousePosition.Y - this.Top;
+            int pointY = MousePosition.Y - Top;
 
             // 轮询每个菜单项，确定窗体需要的长度和宽度
             for (int i = 0; i < mItems.Count; i++)
@@ -242,7 +244,7 @@ namespace CharmControlLibrary
                     if (mMenuType != MenuType.QQ)
                         throw new ArgumentException(
                             "CharmControlLibrary.CharmMenu：当前菜单类型不支持分割线.\n" +
-                            "Name: " + this.Name);
+                            "Name: " + Name);
                     formHeight += 3;
                 }
                 else
@@ -252,7 +254,7 @@ namespace CharmControlLibrary
                     if (mSelectedIndex != i && pointY > formHeight && pointY < (formHeight + 22))
                     {
                         mSelectedIndex = i;
-                        this.Invalidate();
+                        Invalidate();
                         break;
                     }
                     formHeight += 22;
@@ -264,7 +266,7 @@ namespace CharmControlLibrary
         private void CharmMenu_MouseLeave(object sender, EventArgs e)
         {
             mSelectedIndex = -1;
-            this.Invalidate();
+            Invalidate();
         }
 
         // 窗体鼠标单击事件
@@ -286,7 +288,7 @@ namespace CharmControlLibrary
                     if (mMenuType != MenuType.QQ)
                         throw new ArgumentException(
                             "CharmControlLibrary.CharmMenu：当前菜单类型不支持分割线.\n" +
-                            "Name: " + this.Name);
+                            "Name: " + Name);
                     formHeight += 3;
                 }
                 else
@@ -295,9 +297,9 @@ namespace CharmControlLibrary
                     // 判断是否为选择项
                     if (e.Y > formHeight && e.Y < (formHeight + 22))
                     {
-                        if (this.MenuClick != null)
-                            this.MenuClick(i);
-                        this.Visible = false;
+                        if (MenuClick != null)
+                            MenuClick(i);
+                        Visible = false;
                         mSelectedIndex = -1;
                         return;
                     }
@@ -333,10 +335,10 @@ namespace CharmControlLibrary
                     if (mMenuType != MenuType.QQ)
                         throw new ArgumentException(
                             "CharmControlLibrary.CharmMenu：当前菜单类型不支持分割线.\n" +
-                            "Name: " + this.Name);
+                            "Name: " + Name);
                     // 绘制分割线
-                    g.DrawImage(Properties.Resources.menu_spliter,
-                        new Rectangle(new Point(32, formHeight + 1), new Size(this.Width - 39, 2)));
+                    g.DrawImage(Resources.menu_spliter,
+                        new Rectangle(new Point(32, formHeight + 1), new Size(Width - 39, 2)));
                     formHeight += 3;
                 }
                 else
@@ -345,15 +347,15 @@ namespace CharmControlLibrary
                     // 判断是否为选择项，是则需要绘制背景
                     if (mSelectedIndex == i)
                     {
-                        Bitmap imgTemp = Properties.Resources.mun_select_bkg;
+                        Bitmap imgTemp = Resources.mun_select_bkg;
                         imgTemp = ImageOperation.ResizeImageWithoutBorder(
-                            imgTemp, 3, 1, 3, 1, new Size(this.Width - 2, 21));
-                        g.DrawImage(imgTemp, new Rectangle(3, formHeight + 2, this.Width - 5, 21));
+                            imgTemp, 3, 1, 3, 1, new Size(Width - 2, 21));
+                        g.DrawImage(imgTemp, new Rectangle(3, formHeight + 2, Width - 5, 21));
                         // 绘制菜单项文本
-                        g.DrawString(menuItem.Text, this.Font, Brushes.White, new Point(32, formHeight + 3));
+                        g.DrawString(menuItem.Text, Font, Brushes.White, new Point(32, formHeight + 3));
                     }
                     else
-                        g.DrawString(menuItem.Text, this.Font, Brushes.Black, new Point(32, formHeight + 3));
+                        g.DrawString(menuItem.Text, Font, Brushes.Black, new Point(32, formHeight + 3));
 
                     // 判断是否需要绘制图标
                     if (menuItem.Icon != null)
@@ -381,7 +383,7 @@ namespace CharmControlLibrary
         /// <param name="itemText">标题文本</param>
         public void AddItem(string itemText)
         {
-            this.AddItem(itemText, MenuItemType.TextItem);
+            AddItem(itemText, MenuItemType.TextItem);
         }
 
         /// <summary>
@@ -391,7 +393,7 @@ namespace CharmControlLibrary
         /// <param name="itemType">菜单项类型</param>
         public virtual void AddItem(string itemText, MenuItemType itemType)
         {
-            this.AddItem(itemText, itemType, null);
+            AddItem(itemText, itemType, null);
         }
 
         /// <summary>

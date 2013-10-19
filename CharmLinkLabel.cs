@@ -13,7 +13,7 @@
 #endregion
 
 #region 命名空间引用
-using System;
+
 using System.Drawing;
 #endregion
 
@@ -36,23 +36,23 @@ namespace CharmControlLibrary
                 // 获取控件状态
                 base.ControlStatus = value;
                 // 判断字体是否加粗
-                bool isBold = this.Font.Bold;
+                bool isBold = Font.Bold;
                 // 根据控件状态判断是否需要设置下划线
                 if (base.ControlStatus == ControlStatus.Normal)
                 {
                     // 常态，不需要设置
                     if (isBold)  // 判断字体是否加粗
-                        this.Font = new Font(this.Font.Name, this.Font.Size, FontStyle.Bold);
+                        Font = new Font(Font.Name, Font.Size, FontStyle.Bold);
                     else
-                        this.Font = new Font(this.Font.Name, this.Font.Size);
+                        Font = new Font(Font.Name, Font.Size);
                 }
                 else
                 {
                     // 非常态，需要设置
                     if (isBold)  // 判断字体是否加粗
-                        this.Font = new Font(this.Font.Name, this.Font.Size, FontStyle.Underline | FontStyle.Bold);
+                        Font = new Font(Font.Name, Font.Size, FontStyle.Underline | FontStyle.Bold);
                     else
-                        this.Font = new Font(this.Font.Name, this.Font.Size, FontStyle.Underline);
+                        Font = new Font(Font.Name, Font.Size, FontStyle.Underline);
                 }
             }
         }
@@ -70,7 +70,7 @@ namespace CharmControlLibrary
                 SizeF sf;
                 using (Graphics g = Graphics.FromImage(new Bitmap(100, 100)))
                 {
-                    sf = g.MeasureString(base.Text, this.Font);
+                    sf = g.MeasureString(base.Text, Font);
                 }
                 // 设置新的工作区矩形参数
                 base.Width = (int)sf.Width;
@@ -87,7 +87,7 @@ namespace CharmControlLibrary
             : base()
         {
             // * 初始化属性 *
-            this.ControlType = ControlType.CharmLinkLabel;
+            ControlType = ControlType.CharmLinkLabel;
         }
         #endregion
     }

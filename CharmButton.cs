@@ -1,11 +1,11 @@
 ﻿#region 文档说明
 /* ****************************************************************************************************
  * 文档作者：无闻
- * 创建日期：2013年2月13日
+ * 创建日期：2013 年 2 月 13 日
  * 文档用途：CharmButton - 按钮控件
  * -----------------------------------------------------------------------------------------------------
  * 修改记录：
- * 2013-02-20：针对CSBox界面标准2.0进行升级改造
+ * 2013-02-20：针对 CSBox 界面标准 2.0 进行升级改造
  * -----------------------------------------------------------------------------------------------------
  * 参考文献：
  * 
@@ -13,8 +13,9 @@
 #endregion
 
 #region 命名空间引用
-using System;
 using System.Drawing;
+
+using CharmControlLibrary.Properties;
 #endregion
 
 namespace CharmControlLibrary
@@ -23,7 +24,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 按钮类型（用于指定按钮大小和按钮样式）
     /// </summary>
-    public enum ButtonType : int
+    public enum ButtonType
     {
         /// <summary>
         /// 未指定按钮类型
@@ -74,42 +75,42 @@ namespace CharmControlLibrary
                 // 获取用户设置的按钮类型
                 base.ButtonType = value;
                 // 根据按钮类型决定四态图片及控件大小
-                switch (this.ButtonType)
+                switch (ButtonType)
                 {
                     case ButtonType.Classic_Size_06922:
-                        this.Size = new Size(69, 22);
-                        mStatusImages[0] = Properties.Resources.btn_06922_normal;
-                        mStatusImages[1] = Properties.Resources.btn_06922_hover;
-                        mStatusImages[2] = Properties.Resources.btn_06922_down;
-                        mStatusImages[3] = Properties.Resources.btn_06922_unenabled;
+                        Size = new Size(69, 22);
+                        mStatusImages[0] = Resources.btn_06922_normal;
+                        mStatusImages[1] = Resources.btn_06922_hover;
+                        mStatusImages[2] = Resources.btn_06922_down;
+                        mStatusImages[3] = Resources.btn_06922_unenabled;
                         break;
                     case ButtonType.Classic_Size_08223:
-                        this.Size = new Size(82, 23);
-                        mStatusImages[0] = Properties.Resources.btn_08223_normal;
-                        mStatusImages[1] = Properties.Resources.btn_08223_hover;
-                        mStatusImages[2] = Properties.Resources.btn_08223_down;
-                        mStatusImages[3] = Properties.Resources.btn_08223_unenabled;
+                        Size = new Size(82, 23);
+                        mStatusImages[0] = Resources.btn_08223_normal;
+                        mStatusImages[1] = Resources.btn_08223_hover;
+                        mStatusImages[2] = Resources.btn_08223_down;
+                        mStatusImages[3] = Resources.btn_08223_unenabled;
                         break;
                     case ButtonType.Classic_Size_12425:
-                        this.Size = new Size(124, 25);
-                        mStatusImages[0] = Properties.Resources.btn_12425_normal;
-                        mStatusImages[1] = Properties.Resources.btn_12425_hover;
-                        mStatusImages[2] = Properties.Resources.btn_12425_down;
-                        mStatusImages[3] = Properties.Resources.btn_12425_Unenabled;
+                        Size = new Size(124, 25);
+                        mStatusImages[0] = Resources.btn_12425_normal;
+                        mStatusImages[1] = Resources.btn_12425_hover;
+                        mStatusImages[2] = Resources.btn_12425_down;
+                        mStatusImages[3] = Resources.btn_12425_Unenabled;
                         break;
                     case ButtonType.Green_Size_10236:
-                        this.Size = new Size(102, 36);
-                        mStatusImages[0] = Properties.Resources.green_10236_normal;
-                        mStatusImages[1] = Properties.Resources.green_10236_hover;
-                        mStatusImages[2] = Properties.Resources.green_10236_down;
-                        mStatusImages[3] = Properties.Resources.green_10236_unenabled;
+                        Size = new Size(102, 36);
+                        mStatusImages[0] = Resources.green_10236_normal;
+                        mStatusImages[1] = Resources.green_10236_hover;
+                        mStatusImages[2] = Resources.green_10236_down;
+                        mStatusImages[3] = Resources.green_10236_unenabled;
                         break;
                     case ButtonType.Customize:
 
                         break;
                 }
                 // 重新设置控件状态以便绘制背景图像
-                this.ControlStatus = ControlStatus.Normal;
+                ControlStatus = ControlStatus.Normal;
             }
         }
 
@@ -123,7 +124,7 @@ namespace CharmControlLibrary
             {
                 base.ControlStatus = value;
                 // 根据控件状态设定背景图像
-                this.BackgroundImage = mStatusImages[(int)this.ControlStatus];
+                BackgroundImage = mStatusImages[(int)ControlStatus];
             }
         }
 
@@ -132,8 +133,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Image[] StatusImages
         {
-            get { return this.mStatusImages; }
-            set { this.mStatusImages = value; }
+            get { return mStatusImages; }
+            set { mStatusImages = value; }
         }
 
         /// <summary>
@@ -154,9 +155,9 @@ namespace CharmControlLibrary
                     return;
 
                 // 根据按钮类型设置并计算文本偏移位置
-                int offsetX = 0; ;  // X坐标偏移
+                int offsetX = 0;  // X坐标偏移
                 int offsetY = 0;  // Y坐标偏移
-                switch (this.ButtonType)
+                switch (ButtonType)
                 {
                     case ButtonType.Classic_Size_06922:
                         offsetX = -1;
@@ -172,8 +173,8 @@ namespace CharmControlLibrary
                 using (Graphics g = Graphics.FromImage(mStatusImages[0]))
                 {
                     SizeF sf = g.MeasureString(base.Text, base.Font);
-                    this.TextPosition = new Point(
-                        (this.ClientRectangle.Width / 2) - ((int)sf.Width / 2) + offsetX, offsetY);
+                    TextPosition = new Point(
+                        (ClientRectangle.Width / 2) - ((int)sf.Width / 2) + offsetX, offsetY);
                 }
             }
         }
@@ -189,9 +190,14 @@ namespace CharmControlLibrary
                 base.Enabled = value;
                 // 根据控件激活性设置控件状态
                 if (value)
-                    this.ControlStatus = ControlStatus.Normal;
+                    ControlStatus = ControlStatus.Normal;
                 else
-                    this.ControlStatus = ControlStatus.Unenabled;
+                {
+                    // 如果控件在按下的处理事件中被禁止激活，则需要将文本坐标归位
+                    if (ControlStatus == ControlStatus.Down)
+                        TextPosition = new Point(TextPosition.X - 1, TextPosition.Y - 1);
+                    ControlStatus = ControlStatus.Unenabled;
+                }
             }
         }
         #endregion
@@ -201,11 +207,10 @@ namespace CharmControlLibrary
         /// 初始化 CharmButton 类的新实例
         /// </summary>
         public CharmButton()
-            : base()
         {
             // * 初始化属性 *
-            this.ControlType = ControlType.CharmButton;
-            this.mStatusImages = new Image[4];
+            ControlType = ControlType.CharmButton;
+            mStatusImages = new Image[4];
         }
         #endregion
 

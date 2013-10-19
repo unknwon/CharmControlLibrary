@@ -13,9 +13,11 @@
 #endregion
 
 #region 命名空间引用
-using System;
+
 using System.Drawing;
 using System.Windows.Forms;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -24,7 +26,7 @@ namespace CharmControlLibrary
     /// <summary>
     /// 检查框类型：QQ2012
     /// </summary>
-    public enum CheckBoxType : int
+    public enum CheckBoxType
     {
         /// <summary>
         /// 检查框类型：QQ2012
@@ -55,17 +57,17 @@ namespace CharmControlLibrary
                 // 获取用户设置的检查框类型
                 base.CheckBoxType = value;
                 // 根据检查框类型决定四态图片
-                switch (this.CheckBoxType)
+                switch (CheckBoxType)
                 {
                     case CheckBoxType.QQ2012:
-                        mStatusImages[0] = Properties.Resources.checkbox_normal;
-                        mStatusImages[1] = Properties.Resources.checkbox_hightlight;
-                        mStatusImages[2] = Properties.Resources.checkbox_tick_normal;
-                        mStatusImages[3] = Properties.Resources.checkbox_tick_highlight;
+                        mStatusImages[0] = Resources.checkbox_normal;
+                        mStatusImages[1] = Resources.checkbox_hightlight;
+                        mStatusImages[2] = Resources.checkbox_tick_normal;
+                        mStatusImages[3] = Resources.checkbox_tick_highlight;
                         break;
                 }
                 // 重新设置控件状态以便绘制背景图像
-                this.ControlStatus = ControlStatus.Normal;
+                ControlStatus = ControlStatus.Normal;
             }
         }
 
@@ -79,19 +81,19 @@ namespace CharmControlLibrary
             {
                 base.ControlStatus = value;
                 // 判断检查框是否被选中，并根据控件状态设定背景图像
-                if (this.Checked)
+                if (Checked)
                 {
-                    if (this.ControlStatus != ControlStatus.Normal)    // 选中，高亮
-                        this.BackgroundImage = mStatusImages[3];
+                    if (ControlStatus != ControlStatus.Normal)    // 选中，高亮
+                        BackgroundImage = mStatusImages[3];
                     else    // 选中，未高亮
-                        this.BackgroundImage = mStatusImages[2];
+                        BackgroundImage = mStatusImages[2];
                 }
                 else
                 {
-                    if (this.ControlStatus != ControlStatus.Normal)    // 未选中，高亮
-                        this.BackgroundImage = mStatusImages[1];
+                    if (ControlStatus != ControlStatus.Normal)    // 未选中，高亮
+                        BackgroundImage = mStatusImages[1];
                     else    // 未选中，未高亮
-                        this.BackgroundImage = mStatusImages[0];
+                        BackgroundImage = mStatusImages[0];
                 }
             }
         }
@@ -101,8 +103,8 @@ namespace CharmControlLibrary
         /// </summary>
         public Image[] StatusImages
         {
-            get { return this.mStatusImages; }
-            set { this.mStatusImages = value; }
+            get { return mStatusImages; }
+            set { mStatusImages = value; }
         }
 
         /// <summary>
@@ -119,7 +121,7 @@ namespace CharmControlLibrary
                 using (Graphics g = Graphics.FromImage(mStatusImages[0]))
                 {
                     SizeF sf = g.MeasureString(base.Text, base.Font);
-                    this.Size = new Size(22 + (int)sf.Width, 4 + (int)sf.Height);
+                    Size = new Size(22 + (int)sf.Width, 4 + (int)sf.Height);
                 }
             }
         }
@@ -133,9 +135,9 @@ namespace CharmControlLibrary
         protected override void OnMouseClick(MouseEventArgs e)
         {
             // 修改检查框选中值
-            this.Checked = !this.Checked;
+            Checked = !Checked;
             // 修改状态是为了让主窗体能重绘该控件
-            this.ControlStatus = ControlStatus.Normal;
+            ControlStatus = ControlStatus.Normal;
             // 触发基类事件
             base.OnMouseClick(e);
         }
@@ -149,11 +151,11 @@ namespace CharmControlLibrary
             : base()
         {
             // * 初始化属性 *
-            this.ControlType = ControlType.CharmCheckBox;
-            this.mStatusImages = new Image[4];
-            this.CheckBoxType = CheckBoxType.QQ2012;
-            this.Size = new Size(21, 21);
-            this.TextPosition = new Point(22, 4);
+            ControlType = ControlType.CharmCheckBox;
+            mStatusImages = new Image[4];
+            CheckBoxType = CheckBoxType.QQ2012;
+            Size = new Size(21, 21);
+            TextPosition = new Point(22, 4);
         }
         #endregion
 

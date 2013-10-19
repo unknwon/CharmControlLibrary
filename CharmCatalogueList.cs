@@ -17,13 +17,13 @@
 
 #region 命名空间引用
 using System;
-using System.Text;
 using System.Drawing;
-using System.Drawing.Drawing2D;
 using System.Windows.Forms;
 using System.Collections;
 using System.Collections.Generic;
 using System.ComponentModel;
+using CharmControlLibrary.Properties;
+
 #endregion
 
 namespace CharmControlLibrary
@@ -52,11 +52,11 @@ namespace CharmControlLibrary
         /// </summary>
         public string ClassName
         {
-            get { return this.mClassName; }
-            set { this.mClassName = value; }
+            get { return mClassName; }
+            set { mClassName = value; }
         }
 
-        internal ListBox.ObjectCollection OldItems
+        internal ObjectCollection OldItems
         {
             get { return base.Items; }
         }
@@ -88,35 +88,35 @@ namespace CharmControlLibrary
             for (int i = 0; i < Items.Count; i++)
             {
                 // 获取表项工作区矩形
-                Rectangle itemRect = this.GetItemRectangle(i);
+                Rectangle itemRect = GetItemRectangle(i);
                 // 获取当前绘制的表项
                 CatalogListBoxItem item = Items[i];
                 // 绘制表项分割线
-                g.DrawLine(Pens.LightGray, new Point(0, itemRect.Top), new Point(this.Width, itemRect.Top));
+                g.DrawLine(Pens.LightGray, new Point(0, itemRect.Top), new Point(Width, itemRect.Top));
                 // 绘制表项背景
-                g.DrawImage(Properties.Resources.Catalog_normal, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
+                g.DrawImage(Resources.Catalog_normal, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
                 // 第1项需要绘制特殊背景
                 if (i == 0)
-                    g.DrawImage(Properties.Resources.Catalog_First, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33))); ;
+                    g.DrawImage(Resources.Catalog_First, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33))); ;
 
                 // 判断该表项是否为分类
                 if (item.IsClass)
                 {
                     // 绘制展开/收缩图标
                     if (item.IsExpand)
-                        g.DrawImage(Properties.Resources.catalog_class_expand, new Rectangle(new Point(itemRect.Left + 8, itemRect.Y + 11), new Size(12, 12)));
+                        g.DrawImage(Resources.catalog_class_expand, new Rectangle(new Point(itemRect.Left + 8, itemRect.Y + 11), new Size(12, 12)));
                     else
-                        g.DrawImage(Properties.Resources.catalog_class_collapse, new Rectangle(new Point(itemRect.Left + 8, itemRect.Y + 11), new Size(12, 12))); ;
+                        g.DrawImage(Resources.catalog_class_collapse, new Rectangle(new Point(itemRect.Left + 8, itemRect.Y + 11), new Size(12, 12))); ;
                     // 绘制表项标题文本
                     g.DrawString(item.Text, new Font("微软雅黑", 10, FontStyle.Bold), Brushes.DarkBlue, itemRect.Left + 25, itemRect.Top + 7);
                 }
                 else
                 {
                     // 判断是否为选中项
-                    if (this.SelectedIndex == i)
+                    if (SelectedIndex == i)
                     {
                         // 绘制现行选中项
-                        g.DrawImage(Properties.Resources.Catalog_pushed, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
+                        g.DrawImage(Resources.Catalog_pushed, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
                         if (item.StatusImages[2] != null)
                         {
                             g.DrawImage(item.StatusImages[2], new Rectangle(new Point(25, itemRect.Y + 7), item.StatusImages[0].Size));
@@ -131,7 +131,7 @@ namespace CharmControlLibrary
                         // 判断是否为高亮项，是则绘制高亮背景
                         if (mMouseItem == Items[i])
                         {
-                            g.DrawImage(Properties.Resources.Catalog_hover, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
+                            g.DrawImage(Resources.Catalog_hover, new Rectangle(new Point(0, itemRect.Y), new Size(189, 33)));
                             if (item.StatusImages[1] != null)
                             {
                                 g.DrawImage(item.StatusImages[1], new Rectangle(new Point(25, itemRect.Y + 7), item.StatusImages[0].Size));
@@ -178,7 +178,7 @@ namespace CharmControlLibrary
             base.OnMouseMove(e);
             for (int i = 0; i < Items.Count; i++)
             {
-                Rectangle bounds = this.GetItemRectangle(i);
+                Rectangle bounds = GetItemRectangle(i);
                 if (bounds.Contains(e.X, e.Y))
                 {
                     if (e.X > 445 && e.X < 545 && e.Y > (27 + bounds.Y) && e.Y < (57 + bounds.Y))
@@ -191,13 +191,13 @@ namespace CharmControlLibrary
                     }
                     else if (e.X > 330 && e.X < 410 && e.Y > (45 + bounds.Y) && e.Y < (65 + bounds.Y))
                     {
-                        if (this.Cursor != Cursors.Hand)
-                            this.Cursor = Cursors.Hand;
+                        if (Cursor != Cursors.Hand)
+                            Cursor = Cursors.Hand;
                     }
                     else
                     {
-                        if (this.Cursor != Cursors.Arrow)
-                            this.Cursor = Cursors.Arrow;
+                        if (Cursor != Cursors.Arrow)
+                            Cursor = Cursors.Arrow;
 
                         if (buttonHighlightIndex == i)
                         {
@@ -219,7 +219,7 @@ namespace CharmControlLibrary
 
             if (isChange)
             {
-                this.Invalidate();
+                Invalidate();
             }
         }
 
@@ -230,9 +230,9 @@ namespace CharmControlLibrary
         protected override void OnSelectedIndexChanged(EventArgs e)
         {
             // 判断不为主分类标签才执行事件
-            if (!Items[this.SelectedIndex].IsClass)
+            if (!Items[SelectedIndex].IsClass)
             {
-                mMouseItem = Items[this.SelectedIndex];
+                mMouseItem = Items[SelectedIndex];
                 mClassName = mMouseItem.Text;
                 base.OnSelectedIndexChanged(e);
             }
@@ -240,8 +240,8 @@ namespace CharmControlLibrary
             {
                 // 分类表项被单击
                 // 获取分类展开标识、分类ID
-                bool isExpand = Items[this.SelectedIndex].IsExpand;
-                int classID = Items[this.SelectedIndex].ClassID;
+                bool isExpand = Items[SelectedIndex].IsExpand;
+                int classID = Items[SelectedIndex].ClassID;
                 // 判断当前展开状态
                 if (isExpand)
                 {
@@ -255,7 +255,7 @@ namespace CharmControlLibrary
                         }
                     }
                     // 设置展开状态为假
-                    Items[this.SelectedIndex].IsExpand = false;
+                    Items[SelectedIndex].IsExpand = false;
                 }
                 else
                 {
@@ -264,16 +264,16 @@ namespace CharmControlLibrary
                     {
                         if ((mHideItems[i]).ClassID == classID)
                         {
-                            Items.Insert(this.SelectedIndex + 1,mHideItems[i]);
+                            Items.Insert(SelectedIndex + 1,mHideItems[i]);
                             mHideItems.RemoveAt(i);
                         }
                     }
                     // 设置展开状态为真
-                    Items[this.SelectedIndex].IsExpand = true;
+                    Items[SelectedIndex].IsExpand = true;
                 }
             }
             // 重绘列表
-            this.Invalidate();
+            Invalidate();
         }
         #endregion
 
@@ -284,15 +284,15 @@ namespace CharmControlLibrary
         public CharmCatalogueList()
             : base()
         {
-            this.mItems = new CatalogListBoxItemCollection(this);
-            this.mHideItems = new List<CatalogListBoxItem>();
+            mItems = new CatalogListBoxItemCollection(this);
+            mHideItems = new List<CatalogListBoxItem>();
             base.DrawMode = DrawMode.OwnerDrawVariable;
-            this.SetStyle(ControlStyles.UserPaint, true);
-            this.SetStyle(ControlStyles.DoubleBuffer, true);// 双缓冲
-            this.SetStyle(ControlStyles.ResizeRedraw, true);//调整大小时重绘
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
-            this.SetStyle(ControlStyles.OptimizedDoubleBuffer, true);// 双缓冲            
-            this.SetStyle(ControlStyles.SupportsTransparentBackColor, true);
+            SetStyle(ControlStyles.UserPaint, true);
+            SetStyle(ControlStyles.DoubleBuffer, true);// 双缓冲
+            SetStyle(ControlStyles.ResizeRedraw, true);//调整大小时重绘
+            SetStyle(ControlStyles.AllPaintingInWmPaint, true); // 禁止擦除背景.
+            SetStyle(ControlStyles.OptimizedDoubleBuffer, true);// 双缓冲            
+            SetStyle(ControlStyles.SupportsTransparentBackColor, true);
 
             // 初始化属性
             buttonHighlightIndex = -1;
@@ -326,8 +326,8 @@ namespace CharmControlLibrary
         /// </summary>
         public string Text
         {
-            get { return this.mText; }
-            set { this.mText = value; }
+            get { return mText; }
+            set { mText = value; }
         }
 
         /// <summary>
@@ -335,8 +335,8 @@ namespace CharmControlLibrary
         /// </summary>
         public bool IsClass
         {
-            get { return this.mIsClass; }
-            set { this.mIsClass = value; }
+            get { return mIsClass; }
+            set { mIsClass = value; }
         }
 
         /// <summary>
@@ -385,11 +385,11 @@ namespace CharmControlLibrary
             string text,
             int classID)
         {
-            this.mText = text;
-            this.mIsClass = false;
-            this.mClassID = classID;
-            this.IsExpand = false;
-            this.mStatusImages = new Image[3];
+            mText = text;
+            mIsClass = false;
+            mClassID = classID;
+            IsExpand = false;
+            mStatusImages = new Image[3];
         }
 
         /// <summary>
@@ -403,11 +403,11 @@ namespace CharmControlLibrary
             int classID,
             bool isClass)
         {
-            this.mText = text;
-            this.mIsClass = isClass;
-            this.mClassID = classID;
-            this.IsExpand = false;
-            this.mStatusImages = new Image[3];
+            mText = text;
+            mIsClass = isClass;
+            mClassID = classID;
+            IsExpand = false;
+            mStatusImages = new Image[3];
         }
         #endregion
 
@@ -417,7 +417,7 @@ namespace CharmControlLibrary
         /// </summary>
         public void Dispose()
         {
-            this.mStatusImages = null;
+            mStatusImages = null;
         }
         #endregion
     }

@@ -9,9 +9,6 @@
 //------------------------------------------------------------------------------
 
 namespace CharmControlLibrary.Properties {
-    using System;
-    
-    
     /// <summary>
     ///   一个强类型的资源类，用于查找本地化的字符串等。
     /// </summary>

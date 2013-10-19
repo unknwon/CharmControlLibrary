@@ -15,10 +15,10 @@
 #region 命名空间引用
 using System;
 using System.Drawing;
+using System.IO;
 using System.Windows.Forms;
-using System.Collections.Generic;
+using CharmControlLibrary.Properties;
 
-using CharmCommonMethod;
 #endregion
 
 namespace CharmControlLibrary
@@ -34,9 +34,11 @@ namespace CharmControlLibrary
     /// <summary>
     /// 表示 CharmControlLibrary.CharmSkinPanel 皮肤面板控件
     /// </summary>
-    public class CharmSkinPanel : PictureBox
+    public sealed class CharmSkinPanel : PictureBox
     {
         #region 字段
+        // 指示是否显示色调皮肤面板
+        private bool mIsShowColorPanel;
         // 图像资源文件路径
         private string mImageResourcePath;
         // 分页标签现行选中项索引
@@ -51,12 +53,21 @@ namespace CharmControlLibrary
 
         #region 属性
         /// <summary>
+        /// 获取或设置一个值，该值指示是否显示色调皮肤面板
+        /// </summary>
+        public bool IsShowColorPanel
+        {
+            get { return mIsShowColorPanel; }
+            set { mIsShowColorPanel = value; }
+        }
+
+        /// <summary>
         /// 获取或设置控件的图像资源文件路径（结尾不需要"\"，图像资源文件必须以.png结尾）
         /// </summary>
         public string ImageResourcePath
         {
-            get { return this.mImageResourcePath; }
-            set { this.mImageResourcePath = value; }
+            get { return mImageResourcePath; }
+            set { mImageResourcePath = value; }
         }
         #endregion
 
@@ -70,7 +81,7 @@ namespace CharmControlLibrary
             // 判断用户是否设置图像资源文件路径
             if (mImageResourcePath == null)
                 throw new ArgumentNullException("CharmControlLibrary.CharmSkinPanel：未指定图像资源文件路径.\n" +
-                    "Name:" + this.Name);
+                    "Name:" + Name);
 
             // 获取绘制对象
             Graphics g = e.Graphics;
@@ -83,13 +94,13 @@ namespace CharmControlLibrary
             if (mTabSelectedIndex == 0)
             {
                 // 现行选中项，绘制选中背景
-                g.DrawImage(Properties.Resources.tab_pushed_bkg, new Rectangle(5, 9, 40, 30));
+                g.DrawImage(Resources.tab_pushed_bkg, new Rectangle(5, 9, 40, 30));
                 // 绘制选中图像
-                g.DrawImage(Properties.Resources.tabshading_pushed, new Rectangle(5, 9, 40, 30));
+                g.DrawImage(Resources.tabshading_pushed, new Rectangle(5, 9, 40, 30));
 
                 // * 绘制图像皮肤内容 *
                 // 绘制阴影底图
-                g.DrawImage(Properties.Resources.shading_bkg, new Rectangle(8, 43, 208, 133));
+                g.DrawImage(Resources.shading_bkg, new Rectangle(8, 43, 208, 133));
                 // 绘制图像方格
                 for (int i = 0; i < 3; i++)
                 {
@@ -98,7 +109,7 @@ namespace CharmControlLibrary
                         int index = i * 3 + j;   // 缩略图索引
                         Point imgPosition = new Point(9 + j * 68 + j, 44 + i * 43 + i); // 缩略图起始绘制坐标
                         // 判断文件是否存在
-                        if (System.IO.File.Exists(mImageResourcePath + "\\" + Convert.ToString(index) + ".png"))
+                        if (File.Exists(mImageResourcePath + "\\" + Convert.ToString(index) + ".png"))
                         {
                             Image imgTemp = Image.FromFile(mImageResourcePath + "\\" + Convert.ToString(index) + ".png");
                             // 绘制缩略图
@@ -106,11 +117,11 @@ namespace CharmControlLibrary
                             imgTemp.Dispose();
                             // 判断是否为选中项
                             if (mImageSelectedIndex == index)
-                                g.DrawImage(Properties.Resources.pic_check, new Rectangle(imgPosition, new Size(68, 43)));
+                                g.DrawImage(Resources.pic_check, new Rectangle(imgPosition, new Size(68, 43)));
 
                             // 判断是否为高亮项
                             if (mImageHighlightIndex == index)
-                                g.DrawImage(Properties.Resources.pic_shading_highlight, new Rectangle(imgPosition, new Size(68, 43)));
+                                g.DrawImage(Resources.pic_shading_highlight, new Rectangle(imgPosition, new Size(68, 43)));
                         }
                     }
                 }
@@ -118,30 +129,31 @@ namespace CharmControlLibrary
                 // 绘制添加图标
                 // 判断是否为高亮项
                 if (mImageHighlightIndex == 8)
-                    g.DrawImage(Properties.Resources.pic_add_highlight, new Rectangle(new Point(9 + 2 * 68 + 2, 44 + 2 * 43 + 2), new Size(68, 43)));
+                    g.DrawImage(Resources.pic_add_highlight, new Rectangle(new Point(9 + 2 * 68 + 2, 44 + 2 * 43 + 2), new Size(68, 43)));
                 else
-                    g.DrawImage(Properties.Resources.pic_add_normal, new Rectangle(new Point(9 + 2 * 68 + 2, 44 + 2 * 43 + 2), new Size(68, 43)));
+                    g.DrawImage(Resources.pic_add_normal, new Rectangle(new Point(9 + 2 * 68 + 2, 44 + 2 * 43 + 2), new Size(68, 43)));
             }
             else if (mTabHighlightIndex == 0)   // 高亮的情况
-                g.DrawImage(Properties.Resources.tabshading_highlight, new Rectangle(5, 9, 40, 30));
+                g.DrawImage(Resources.tabshading_highlight, new Rectangle(5, 9, 40, 30));
             else // 普通情况
-                g.DrawImage(Properties.Resources.tabshading_normal, new Rectangle(5, 9, 40, 30));
+                g.DrawImage(Resources.tabshading_normal, new Rectangle(5, 9, 40, 30));
             #endregion
 
+            if (!mIsShowColorPanel) return;
             #region 色调皮肤面板
             if (mTabSelectedIndex == 1)
             {
                 // 现行选中项，绘制选中背景
-                g.DrawImage(Properties.Resources.tab_pushed_bkg, new Rectangle(45, 9, 40, 30));
+                g.DrawImage(Resources.tab_pushed_bkg, new Rectangle(45, 9, 40, 30));
                 // 绘制选中图像
-                g.DrawImage(Properties.Resources.tabcolor_pushed, new Rectangle(45, 9, 40, 30));
+                g.DrawImage(Resources.tabcolor_pushed, new Rectangle(45, 9, 40, 30));
 
                 // * 绘制色调皮肤内容 *
             }
             else if (mTabHighlightIndex == 1)   // 高亮的情况
-                g.DrawImage(Properties.Resources.tabcolor_highlight, new Rectangle(45, 9, 40, 30));
+                g.DrawImage(Resources.tabcolor_highlight, new Rectangle(45, 9, 40, 30));
             else // 普通情况
-                g.DrawImage(Properties.Resources.tabcolor_normal, new Rectangle(45, 9, 40, 30));
+                g.DrawImage(Resources.tabcolor_normal, new Rectangle(45, 9, 40, 30));
             #endregion
         }
 
@@ -195,16 +207,16 @@ namespace CharmControlLibrary
                                     Bitmap imgTemp = new Bitmap(Image.FromFile(openFileDialog.FileName), new Size(68, 43));
                                     skinFilePath = mImageResourcePath + "\\" + Convert.ToString(index - 1) + ".png";
                                     // 如果已存在用户自定义图片，则先删除
-                                    if (System.IO.File.Exists(skinFilePath))
-                                        System.IO.File.Delete(skinFilePath);
+                                    if (File.Exists(skinFilePath))
+                                        File.Delete(skinFilePath);
                                     imgTemp.Save(skinFilePath);
                                     imgTemp.Dispose();
                                     skinFilePath = mImageResourcePath + "\\bkg_" + Convert.ToString(index - 1) + ".png";
                                     // 如果已存在用户自定义图片，则先删除
-                                    if (System.IO.File.Exists(skinFilePath))
-                                        System.IO.File.Delete(skinFilePath);
+                                    if (File.Exists(skinFilePath))
+                                        File.Delete(skinFilePath);
                                     // 移动文件
-                                    System.IO.File.Copy(openFileDialog.FileName, skinFilePath);
+                                    File.Copy(openFileDialog.FileName, skinFilePath);
 
                                     // 如果当前用的是用户自定义图片，则将选中项重置，以便进行重新加载
                                     if (mImageSelectedIndex == 7)
@@ -216,14 +228,14 @@ namespace CharmControlLibrary
                             {
                                 mImageSelectedIndex = index;
                                 mImageHighlightIndex = -1;
-                                this.Visible = false;
+                                Visible = false;
                                 // 触发图像皮肤换肤事件
-                                if (this.ImageSkinChanged != null)
-                                    this.ImageSkinChanged(mImageSelectedIndex);
+                                if (ImageSkinChanged != null)
+                                    ImageSkinChanged(mImageSelectedIndex);
                             }
 
                             // 重绘控件
-                            this.Invalidate();
+                            Invalidate();
                         }
                     }
                 }
@@ -231,7 +243,7 @@ namespace CharmControlLibrary
 
             // 判断是否需要重绘
             if (isRedraw)
-                this.Invalidate();
+                Invalidate();
 
             // 触发基类事件
             base.OnMouseClick(e);
@@ -280,7 +292,7 @@ namespace CharmControlLibrary
                         {
                             int index = i * 3 + j;   // 缩略图索引
                             // 判断自定义背景图片是否存在
-                            if (index == 8 || System.IO.File.Exists(mImageResourcePath + "\\" + Convert.ToString(index) + ".png"))
+                            if (index == 8 || File.Exists(mImageResourcePath + "\\" + Convert.ToString(index) + ".png"))
                             {
                                 // 自定义背景图片资源存在则判断是否需要进行特效重绘
                                 if (mImageHighlightIndex != (index))
@@ -301,7 +313,7 @@ namespace CharmControlLibrary
 
             // 判断是否需要重绘
             if (isRedraw)
-                this.Invalidate();
+                Invalidate();
 
             // 触发基类事件
             base.OnMouseMove(e);
@@ -323,21 +335,21 @@ namespace CharmControlLibrary
             : base()
         {
             // * 设置双缓冲模式 *
-            this.SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
+            SetStyle(ControlStyles.AllPaintingInWmPaint | //不擦除背景 ,减少闪烁
                                ControlStyles.OptimizedDoubleBuffer | //双缓冲
                                ControlStyles.UserPaint, //使用自定义的重绘事件,减少闪烁
                                true);
-            this.UpdateStyles();
+            UpdateStyles();
 
             // * 初始化属性 *
-            this.BackColor = Color.Transparent;
-            this.BackgroundImage = Properties.Resources.skinpanel_bkg;
-            this.Size = this.BackgroundImage.Size;
-            this.Visible = false;
-            this.mTabSelectedIndex = 0;
-            this.mTabHighlightIndex = -1;
-            this.mImageSelectedIndex = -1;
-            this.mImageHighlightIndex = -1;
+            BackColor = Color.Transparent;
+            BackgroundImage = Resources.skinpanel_bkg;
+            Size = BackgroundImage.Size;
+            Visible = false;
+            mTabSelectedIndex = 0;
+            mTabHighlightIndex = -1;
+            mImageSelectedIndex = -1;
+            mImageHighlightIndex = -1;
         }
         #endregion
     }
