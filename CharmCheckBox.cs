@@ -31,7 +31,7 @@ namespace CharmControlLibrary
         /// <summary>
         /// 检查框类型：QQ2012
         /// </summary>
-        QQ2012
+        Qq2012
     }
     #endregion
 
@@ -49,7 +49,7 @@ namespace CharmControlLibrary
         /// <summary>
         /// 获取或设置 CharmControlLibrary.CharmCheckBox 的检查框类型
         /// </summary>
-        public override CheckBoxType CheckBoxType
+        public override sealed CheckBoxType CheckBoxType
         {
             get { return base.CheckBoxType; }
             set
@@ -59,7 +59,7 @@ namespace CharmControlLibrary
                 // 根据检查框类型决定四态图片
                 switch (CheckBoxType)
                 {
-                    case CheckBoxType.QQ2012:
+                    case CheckBoxType.Qq2012:
                         mStatusImages[0] = Resources.checkbox_normal;
                         mStatusImages[1] = Resources.checkbox_hightlight;
                         mStatusImages[2] = Resources.checkbox_tick_normal;
@@ -81,20 +81,10 @@ namespace CharmControlLibrary
             {
                 base.ControlStatus = value;
                 // 判断检查框是否被选中，并根据控件状态设定背景图像
-                if (Checked)
-                {
-                    if (ControlStatus != ControlStatus.Normal)    // 选中，高亮
-                        BackgroundImage = mStatusImages[3];
-                    else    // 选中，未高亮
-                        BackgroundImage = mStatusImages[2];
-                }
-                else
-                {
-                    if (ControlStatus != ControlStatus.Normal)    // 未选中，高亮
-                        BackgroundImage = mStatusImages[1];
-                    else    // 未选中，未高亮
-                        BackgroundImage = mStatusImages[0];
-                }
+                if (Checked)    // 选中
+                    BackgroundImage = ControlStatus != ControlStatus.Normal ? mStatusImages[3] : mStatusImages[2];
+                else    // 未选中
+                    BackgroundImage = ControlStatus != ControlStatus.Normal ? mStatusImages[1] : mStatusImages[0];
             }
         }
 
@@ -148,12 +138,11 @@ namespace CharmControlLibrary
         /// 初始化 CharmCheckBox 类的新实例
         /// </summary>
         public CharmCheckBox()
-            : base()
         {
             // * 初始化属性 *
             ControlType = ControlType.CharmCheckBox;
             mStatusImages = new Image[4];
-            CheckBoxType = CheckBoxType.QQ2012;
+            CheckBoxType = CheckBoxType.Qq2012;
             Size = new Size(21, 21);
             TextPosition = new Point(22, 4);
         }

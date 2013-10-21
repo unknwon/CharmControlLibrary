@@ -168,6 +168,7 @@ namespace CharmControlLibrary
                         offsetY = 3;
                         break;
                     case ButtonType.Classic_Size_12425:
+                        offsetY = 3;
                         break;
                 }
                 using (Graphics g = Graphics.FromImage(mStatusImages[0]))
